@@ -6,12 +6,34 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //speed variable
+    public float speed;
 
     //RG2D
+    Rigidbody2D rb;
 
     //Input Axis'
 
+    float vAxis;
+
+    float xAxis;
+
+    bool LeftClick;
+
     //playerHP (Get and Set)
+
+    private int _playerHP = 3;
+
+    public int PlayerHP 
+    { 
+        get { return _playerHP; }
+
+        set { _playerHP = value;
+
+            if (_playerHP <= 0)
+
+                Debug.Log("Install Player Death");
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
