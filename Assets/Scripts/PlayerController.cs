@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Projectile prefab
+    public GameObject projectilePrefab;
+
     void Awake()
     {
         //reference to Rigibody2D
@@ -79,6 +82,8 @@ public class PlayerController : MonoBehaviour
     public void AttackEvent()
     {
         Debug.Log("Player Has Fired");
+
+        Instantiate(projectilePrefab, this.transform.position + Vector3.up, Quaternion.identity);
 
         //if(Mouse1)
         //AttackEvent

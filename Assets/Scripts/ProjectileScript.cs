@@ -5,22 +5,28 @@ using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
 {
+    //Vector2 for movement
     Vector2 ProjectileMove;
-
+    
+    //the speed of the projectile
     public float projSpeed;
 
-    public Collider2D pCollider;
+    //collider for the projectile
+    private Collider2D pCollider;
 
-    public Rigidbody2D rb;
+    //rigidbody of the projectile
+    private Rigidbody2D rb;
 
-    private float timer;
-
+    //decides how long an object lasts until death
     public float timeUntilDeath;
 
     void Awake()
     {
         pCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
+
+        //on awake, call this function (the argument will be either a bool or an interface that will hold information
+        //regarding who fired the projectile
         OnInstantiate(true);
     }
     // Start is called before the first frame update
@@ -37,7 +43,7 @@ public class ProjectileScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        rb.MovePosition(rb.position + (ProjectileMove) * Time.deltaTime);
     }
 
     //will establish who fired this projectile, based on the argument (which will be an event call that is sent by the 
@@ -57,11 +63,21 @@ public class ProjectileScript : MonoBehaviour
                 Debug.Log("EnemyFired");
                 break;
         }
+
+        StartCoroutine(StartCount());
     }
 
+    //IEnumerator that calls the DeleteProjectile function upon the WaitForSeconds object expiring
     IEnumerator StartCount()
     {
-        yield break;
+        yield return new WaitForSeconds(timeUntilDeath);
+        DeleteProjectile();
+    }
+
+    //on Call, will destroy itself
+    public void DeleteProjectile()
+    {
+        Destroy(gameObject);
     }
     //OnInstantiate/ Constructor
 
