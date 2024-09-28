@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BomberScript : MonoBehaviour
+public class BomberScript : EnemyBehavior
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    Vector2 bomberMove;
+
+
+
+    public override void EnemyMove()
     {
-        
+        bomberMove = Vector2.down;
+
+        eRB.MovePosition(eRB.position + (bomberMove * speed) * Time.fixedDeltaTime);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void KillEntity()
     {
-        
+        EnemyLives -= 1;
+
+        Debug.Log("Enemy killed, call event to decrease Bomber count");
     }
-
-    //EnemyMove
-
-    //OnHit
 }
