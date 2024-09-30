@@ -5,16 +5,28 @@ using UnityEngine;
 public class BomberScript : EnemyBehavior
 {
     //Vector for moving
-    Vector2 bomberMove;
+    Vector2 bomberMove = Vector2.down;
     //array of spawnpoints for the bomber enemy prefab
-    public GameObject[] BomberSpawns;
+    private GameObject[] BomberSpawns;
+
+
 
     public override void Setup()
     {
+        Debug.Log("Setup function called");
+
+        BomberSpawns = GameObject.FindGameObjectsWithTag("TopOfScreen");
+
+     
+
+        if(BomberSpawns.Length > 0 )
+        {
+            Debug.LogFormat("BomberSpawns populated, number of elements  {0}", BomberSpawns.Length);
+        }
 
         SpawnEnemy();
 
-        EnemyMove();
+      
 
         
     }
@@ -23,18 +35,16 @@ public class BomberScript : EnemyBehavior
 
 
 
-    //will move the bomber enemy in a downward direction
-    //This overriden function should be the one called in the base class awake
-    public override void EnemyMove()
+
+
+    void FixedUpdate()
     {
-        bomberMove = Vector2.down;
-
-        eRB.MovePosition(eRB.position + (bomberMove * speed) * Time.fixedDeltaTime);
+        eRB.MovePosition(eRB.position + ((bomberMove * speed) * Time.deltaTime));
     }
-
     //will be called upon the enemy running into the player, or colliding with a projectile
     public override void KillEntity()
     {
+        Debug.Log("Function called, initiating kill");
         //should possess the EnemyLives variable from base
         EnemyLives -= 1;
 
@@ -45,9 +55,12 @@ public class BomberScript : EnemyBehavior
     //should utilize the awake function in the base class to perform function
     public override void SpawnEnemy()
     {
-       GameObject SpawnPoint = BomberSpawns[Random.Range(0, BomberSpawns.Length)];
+        Debug.Log("Function called, spawning enemy");
 
-        Instantiate(this, SpawnPoint.transform);
+        
+        //GameObject SpawnPoint = BomberSpawns[Random.Range(0, BomberSpawns.Length)];
+
+        // Instantiate(this, SpawnPoint.transform);
 
         //if(quotaismet)
 

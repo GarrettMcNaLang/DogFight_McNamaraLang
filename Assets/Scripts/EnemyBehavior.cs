@@ -34,13 +34,13 @@ public abstract class EnemyBehavior : MonoBehaviour
     {
         eCollider = GetComponent<Collider2D>();
 
-        if (eCollider == null)
-            Debug.Log("Awake function isn't making inheriters access collider");
+        //if (eCollider == null)
+        //    Debug.Log("Awake function isn't making inheriters access collider");
 
         eRB = GetComponent<Rigidbody2D>();
 
-        if (eRB = null)
-            Debug.Log("Awake function isn't making inheriters access rigidbodies");
+        //if (eRB == null)
+        //    Debug.Log("Awake function isn't making inheriters access rigidbodies");
 
 
         Setup();
@@ -50,8 +50,7 @@ public abstract class EnemyBehavior : MonoBehaviour
 
     public abstract void Setup();
 
-    //moves the enemy, varies depending on inheriting enemy type
-    public abstract void EnemyMove();
+  
     //kills the enemy on collision
     public abstract void KillEntity();
     //spawnEnemy
