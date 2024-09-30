@@ -41,13 +41,21 @@ public abstract class EnemyBehavior : MonoBehaviour
 
         if (eRB = null)
             Debug.Log("Awake function isn't making inheriters access rigidbodies");
+
+
+        Setup();
+
     }
+    //a pseudo awake function that is called by base awake
+
+    public abstract void Setup();
 
     //moves the enemy, varies depending on inheriting enemy type
-
     public abstract void EnemyMove();
-
+    //kills the enemy on collision
     public abstract void KillEntity();
+    //spawnEnemy
+    public abstract void SpawnEnemy();
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {

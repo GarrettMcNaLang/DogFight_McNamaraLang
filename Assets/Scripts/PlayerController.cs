@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     //RG2D
     Rigidbody2D rb;
 
+    //collider2D
+
+    Collider2D pCollider;
     //Input Axis'
 
     Vector2 CardinalMovement;
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         //
+        pCollider = GetComponent<Collider2D>();
     
     }
     // Start is called before the first frame update
