@@ -9,7 +9,11 @@ public class BomberScript : EnemyBehavior
     //array of spawnpoints for the bomber enemy prefab
     private GameObject[] BomberSpawns;
 
+    //timer variable for next spawn
+    public float NextSpawn;
 
+    //Countdown timer
+    private float Countdown;
 
     public override void Setup()
     {
@@ -24,6 +28,8 @@ public class BomberScript : EnemyBehavior
             Debug.LogFormat("BomberSpawns populated, number of elements  {0}", BomberSpawns.Length);
         }
 
+        Countdown = NextSpawn;
+
         SpawnEnemy();
 
       
@@ -33,7 +39,10 @@ public class BomberScript : EnemyBehavior
 
     //CallUntilEnd function
 
-
+    void Update()
+    {
+        Countdown -= Time.deltaTime;
+    }
 
 
 

@@ -79,6 +79,15 @@ public abstract class EnemyBehavior : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        
+    }
+
+    protected void KillOnLeaveCameraView()
+    {
+
+    }
     //Onhit
     //EnemyMove
 
