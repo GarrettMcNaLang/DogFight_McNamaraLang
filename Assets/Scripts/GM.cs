@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GM : MonoBehaviour
 {
+   //singleton format
+
+
     //Spanws (Enemies and Players
 
     //EnemyCount in Wave (Get Set)

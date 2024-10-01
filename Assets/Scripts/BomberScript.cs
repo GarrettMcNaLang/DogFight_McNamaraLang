@@ -30,7 +30,7 @@ public class BomberScript : EnemyBehavior
 
         Countdown = NextSpawn;
 
-        SpawnEnemy();
+       
 
       
 
@@ -42,6 +42,13 @@ public class BomberScript : EnemyBehavior
     void Update()
     {
         Countdown -= Time.deltaTime;
+
+        if(Countdown <= NextSpawn)
+        {
+            SpawnEnemy();
+
+            Countdown = NextSpawn;
+        }
     }
 
 
@@ -69,7 +76,7 @@ public class BomberScript : EnemyBehavior
         
         //GameObject SpawnPoint = BomberSpawns[Random.Range(0, BomberSpawns.Length)];
 
-        // Instantiate(this, SpawnPoint.transform);
+        //Instantiate(this, SpawnPoint.transform);
 
         //if(quotaismet)
 

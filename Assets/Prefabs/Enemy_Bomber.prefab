@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  NextSpawn: 10
 --- !u!50 &3254483491910396670
 Rigidbody2D:
   serializedVersion: 4
