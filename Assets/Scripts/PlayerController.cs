@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
         set { _playerHP = value;
 
+            Debug.LogFormat("Player HP = {0}", _playerHP);
+
             if (_playerHP <= 0)
 
                 Debug.Log("Install Player Death");
@@ -102,14 +104,14 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void OnHit()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        //OnHit
+        if(collision.gameObject.TryGetComponent<EnemyBehavior>(out EnemyBehavior anyEnemy))
+        {
+            Debug.Log("Hit by Enemy, subtract 1 health");
 
-        //subtract 1 from player health
-        //send message to MenuManager to subtract one player icon for lives.
-        //cue brief immortality
-
+            PlayerHP -= 1;
+        }
     }
 
     public void StayInLimits()

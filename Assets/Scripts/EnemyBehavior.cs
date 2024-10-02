@@ -27,7 +27,11 @@ public abstract class EnemyBehavior : MonoBehaviour
             _EnemyLives = value;
 
             if (_EnemyLives < 0)
+            {
                 Debug.Log("Initiate Enemy Death");
+                
+            }
+                
         }
     }
     void Awake()
@@ -46,15 +50,11 @@ public abstract class EnemyBehavior : MonoBehaviour
         Setup();
 
     }
-    //a pseudo awake function that is called by base awake
-
-    public abstract void Setup();
-
-  
+   
     //kills the enemy on collision
     public abstract void KillEntity();
-    //spawnEnemy
-    public abstract void SpawnEnemy();
+
+    public abstract void Setup();
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {

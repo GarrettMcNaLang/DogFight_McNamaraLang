@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TopOfScreen
   - SidesOfScreen
+  - EMoveTowards
   layers:
   - Default
   - TransparentFX
