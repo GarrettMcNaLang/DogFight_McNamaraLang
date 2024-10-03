@@ -155,6 +155,8 @@ Transform:
   - {fileID: 1896505560}
   - {fileID: 520641208}
   - {fileID: 1143756559}
+  - {fileID: 1829670001}
+  - {fileID: 2036089409}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &230867273
@@ -489,8 +491,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1143756559}
   m_Layer: 0
-  m_Name: FlyHereConstant
-  m_TagString: Untagged
+  m_Name: FlyHereMiddle
+  m_TagString: ConstantLocation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -504,7 +506,7 @@ Transform:
   m_GameObject: {fileID: 1143756558}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.92, y: 2.11, z: 0}
+  m_LocalPosition: {x: -3.92, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -687,6 +689,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1829670000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1829670001}
+  m_Layer: 0
+  m_Name: FlyHereLeft
+  m_TagString: ConstantLocation
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1829670001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829670000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.2, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89164377}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1896505559
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,13 +759,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2640242084628021594, guid: 8be69a5434a3e8d408a44b45ff033a27, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3964024548006556101, guid: 8be69a5434a3e8d408a44b45ff033a27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -40.21
+      value: -26.94
       objectReference: {fileID: 0}
     - target: {fileID: 3964024548006556101, guid: 8be69a5434a3e8d408a44b45ff033a27, type: 3}
       propertyPath: m_LocalPosition.y
@@ -816,6 +845,37 @@ Transform:
   - {fileID: 589980861298982161}
   - {fileID: 589980860647799027}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2036089408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2036089409}
+  m_Layer: 0
+  m_Name: FlyHereRight
+  m_TagString: ConstantLocation
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2036089409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036089408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.02, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 89164377}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2040157870
 GameObject:
@@ -1079,11 +1139,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4383797554662575039, guid: c454ded1bd18e6c45b59b82ff24f8288, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.433758
+      value: -41.88
       objectReference: {fileID: 0}
     - target: {fileID: 4383797554662575039, guid: c454ded1bd18e6c45b59b82ff24f8288, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.431616
+      value: -5.7
       objectReference: {fileID: 0}
     - target: {fileID: 4383797554662575039, guid: c454ded1bd18e6c45b59b82ff24f8288, type: 3}
       propertyPath: m_LocalPosition.z

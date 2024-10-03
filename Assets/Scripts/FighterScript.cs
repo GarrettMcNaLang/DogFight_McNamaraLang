@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class FighterScript : EnemyBehavior
@@ -11,52 +12,105 @@ public class FighterScript : EnemyBehavior
 
     //3 points past the bottom of the screen that will be chosen randomly for the enemy to move to 
     private GameObject[] Destinations;
-
+    //the upper middle of the screen
+    private GameObject[] ConstantDestination;
+    
+    //reference used for collisions
     public GameObject Player;
 
-    Vector2 FighterMove;
-
-
+    //a randomly selected gameObject from the Destinations array
     GameObject endPosition;
 
-    
+    GameObject ConstPosition;
 
+    //Direction from the enemy rigibody to any relevant location
+    Vector2 Direction;
 
+    //the position of the middle vector
+    Vector2 constantDestinationVector;
+
+    //the position of the rigibody
+    Vector2 EnemyPosition;
+
+    //location of the randomly selected endposition position
+    Vector2 endPositionVector;
     public override void Setup()
     {
+        //retrieves all ends for the array
         Destinations = GameObject.FindGameObjectsWithTag("EMoveTowards");
 
+        //checks if it's full
         if (Destinations != null)
             Debug.LogFormat("Array filled, full of {0} elements", Destinations.Length);
+        
+        //gets the constantDestination position gameObject
+        ConstantDestination = GameObject.FindGameObjectsWithTag("ConstantLocation");
 
+        if (ConstantDestination != null)
+            Debug.LogFormat("Array filled, full of {0} elements", ConstantDestination.Length);
+        //randomly selects a gameobject from the array
+        endPosition = Destinations[Random.Range(0, Destinations.Length)];
+
+        ConstPosition = ConstantDestination[Random.Range(0, ConstantDestination.Length)];
+        //retrieves player object
         Player = GameObject.Find("Player");
 
+        //checks if it's full
         if (Player != null)
             Debug.Log("Player object is full");
 
-        endPosition = Destinations[Random.Range(0, Destinations.Length)];
+       //gets the inital position for the rigibody, used for distance and movement calculations
+        EnemyPosition = eRB.position;
 
+        //position of randomly selected end position
+        endPositionVector = endPosition.transform.position;
 
+        //position of ConstantDestination object
+        constantDestinationVector = ConstPosition.transform.position;
 
-        FighterMove = new Vector2(endPosition.transform.position.x - eRB.position.x, endPosition.transform.position.y - eRB.position.y).normalized;
+        //direction from enemy position to middle destination
+        Direction = (constantDestinationVector - EnemyPosition).normalized;
+
+        
     }
     // Update is called once per frame
     void Update()
     {
-        
+        //updates position 
+        EnemyPosition = eRB.position;
 
-       
+        //calculates the distance between the Enemy and the middle destination
+        var Distance = Vector2.Distance(EnemyPosition, constantDestinationVector);
+       // Debug.Log(Distance);
+
+        //if the distance is less than 1
+        if (Distance < 1f)
+        {
+            //change the direction to one of the randomly selected positions
+            Debug.Log("Changing direction");
+            Direction = (endPositionVector - EnemyPosition).normalized;
+
+
+            Physics.SyncTransforms();
+        }
+
+
+
     }
 
     void FixedUpdate()
     {
         //cast raycast toward player location
 
+        
 
-        eRB.MovePosition(eRB.position + (speed * Time.deltaTime * FighterMove));
 
+        eRB.MovePosition(eRB.position + (speed * Time.deltaTime * Direction));
+
+        //eRB.MovePosition(eRB.position + (speed * Time.deltaTime * FighterMove));
 
         
+
     }
 
 
