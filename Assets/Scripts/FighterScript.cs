@@ -34,6 +34,9 @@ public class FighterScript : EnemyBehavior
 
     //location of the randomly selected endposition position
     Vector2 endPositionVector;
+
+    public GameObject Projectile;
+
     public override void Setup()
     {
         //retrieves all ends for the array
@@ -92,6 +95,8 @@ public class FighterScript : EnemyBehavior
 
 
             Physics.SyncTransforms();
+
+            AttackEvent();
         }
 
 
@@ -116,7 +121,7 @@ public class FighterScript : EnemyBehavior
 
     public void AttackEvent()
     {
-        //instantiate projectiles and wait for a few seconds
+        Instantiate(Projectile, this.transform.position + Vector3.up, Quaternion.identity);
     }
   
 
