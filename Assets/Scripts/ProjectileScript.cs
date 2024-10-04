@@ -20,6 +20,10 @@ public class ProjectileScript : MonoBehaviour
     //decides how long an object lasts until death
     public float timeUntilDeath;
 
+    bool EntityFired;
+
+    private GameObject player;
+
     void Awake()
     {
         pCollider = GetComponent<Collider2D>();
@@ -27,7 +31,7 @@ public class ProjectileScript : MonoBehaviour
 
         //on awake, call this function (the argument will be either a bool or an interface that will hold information
         //regarding who fired the projectile
-        OnInstantiate(true);
+        OnInstantiate(false);
     }
     // Start is called before the first frame update
     void Start()
@@ -43,7 +47,11 @@ public class ProjectileScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(EntityFired == true)
         rb.MovePosition(rb.position + (ProjectileMove) * Time.deltaTime);
+
+        //else if(EntityFired == false)
+
     }
 
     //will establish who fired this projectile, based on the argument (which will be an event call that is sent by the 
@@ -55,11 +63,14 @@ public class ProjectileScript : MonoBehaviour
             //case Player
             case true:
                 Debug.Log("PlayerFire");
+                EntityFired = true;
                 break;
 
             //case Enemy
             case false:
 
+                EntityFired = false;
+                player = GameObject.FindGameObjectWithTag("Player");
                 Debug.Log("EnemyFired");
                 break;
         }
