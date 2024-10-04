@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -37,6 +38,8 @@ public class FighterScript : EnemyBehavior
 
     public GameObject Projectile;
 
+    public GameObject nose;
+
     public override void Setup()
     {
         //retrieves all ends for the array
@@ -52,9 +55,9 @@ public class FighterScript : EnemyBehavior
         if (ConstantDestination != null)
             Debug.LogFormat("Array filled, full of {0} elements", ConstantDestination.Length);
         //randomly selects a gameobject from the array
-        endPosition = Destinations[Random.Range(0, Destinations.Length)];
+        endPosition = Destinations[UnityEngine.Random.Range(0, Destinations.Length)];
 
-        ConstPosition = ConstantDestination[Random.Range(0, ConstantDestination.Length)];
+        ConstPosition = ConstantDestination[UnityEngine.Random.Range(0, ConstantDestination.Length)];
         //retrieves player object
         Player = GameObject.Find("Player");
 
@@ -74,6 +77,7 @@ public class FighterScript : EnemyBehavior
         //direction from enemy position to middle destination
         Direction = (constantDestinationVector - EnemyPosition).normalized;
 
+        
         
     }
     // Update is called once per frame
@@ -96,8 +100,11 @@ public class FighterScript : EnemyBehavior
 
             Physics.SyncTransforms();
 
+
             AttackEvent();
         }
+
+       
 
 
 
@@ -121,7 +128,8 @@ public class FighterScript : EnemyBehavior
 
     public void AttackEvent()
     {
-        Instantiate(Projectile, this.transform.position + Vector3.up, Quaternion.identity);
+        Instantiate(Projectile,this.transform.position + Vector3.down, Quaternion.identity);
+        
     }
   
 

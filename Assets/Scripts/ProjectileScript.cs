@@ -42,12 +42,12 @@ public class ProjectileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProjectileMove = Vector2.up * projSpeed;
+        
     }
 
     void FixedUpdate()
     {
-        if(EntityFired == true)
+        
         rb.MovePosition(rb.position + (ProjectileMove) * Time.deltaTime);
 
         //else if(EntityFired == false)
@@ -63,6 +63,7 @@ public class ProjectileScript : MonoBehaviour
             //case Player
             case true:
                 Debug.Log("PlayerFire");
+                ProjectileMove = Vector2.up * projSpeed;
                 EntityFired = true;
                 break;
 
@@ -71,6 +72,12 @@ public class ProjectileScript : MonoBehaviour
 
                 EntityFired = false;
                 player = GameObject.FindGameObjectWithTag("Player");
+                var direction = player.transform.position - transform.position;
+                ProjectileMove = new Vector2(direction.x, direction.y).normalized * projSpeed;
+
+                var rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, 0, rotation + 90);
+
                 Debug.Log("EnemyFired");
                 break;
         }

@@ -232,4 +232,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   Player: {fileID: 0}
-  Projectile: {fileID: 0}
+  Projectile: {fileID: 6555888921824220439, guid: 18c9a7a985464c34e94aea3012fddb36, type: 3}
+  nose: {fileID: 2666710200237099609}
