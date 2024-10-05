@@ -4,9 +4,39 @@ using UnityEngine;
 
 public class GM : MonoBehaviour
 {
-   //singleton format
+    //singleton format
+    public static GM instance;
 
 
+    void Awake()
+    {
+        instance = this;
+        if (instance)
+        {
+            DestroyImmediate(instance);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnEnable()
+    {
+
+       
+    }
+
+    //will spawn projectiles
+    public delegate void ProjectileSpawner(bool whoFired, Vector2 shooterTransform);
+
+    public event ProjectileSpawner SpawnProjectile;
+
+    public delegate void SetUpRound();
+
+    public event SetUpRound RoundInstance;
+
+    public delegate void PlayerDeath();
+
+    public event PlayerDeath PlayerDeathEvent;
     //Spanws (Enemies and Players
 
     //EnemyCount in Wave (Get Set)

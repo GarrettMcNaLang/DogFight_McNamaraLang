@@ -19,8 +19,37 @@ public class MenuManager : MonoBehaviour
         
     }
 
-    public void ChangeTextColor()
+    public void StartGame()
     {
 
+    }
+
+    public void InstructionsScreen()
+    {
+
+    }
+
+    public void ExitGame()
+    {
+
+    }
+    public void PauseScreen()
+    {
+
+    }
+
+    public void VictoryScreen()
+    {
+
+    }
+
+    public void ReturnToMain()
+    {
+
+    }
+
+    public void ChangeRoundValues()
+    {
+       
     }
 }

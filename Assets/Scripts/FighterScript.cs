@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,8 +39,8 @@ public class FighterScript : EnemyBehavior
 
     public GameObject Projectile;
 
-    public GameObject nose;
-
+  
+    
     public override void Setup()
     {
         //retrieves all ends for the array
@@ -128,7 +129,9 @@ public class FighterScript : EnemyBehavior
 
     public void AttackEvent()
     {
-        Instantiate(Projectile,this.transform.position + Vector3.down, Quaternion.identity);
+        Vector2 position = this.transform.position;
+        //GM.instance.SpawnProjectile(false, position);
+        
         
     }
   

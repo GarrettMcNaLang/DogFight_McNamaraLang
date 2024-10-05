@@ -29,9 +29,7 @@ public class ProjectileScript : MonoBehaviour
         pCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
 
-        //on awake, call this function (the argument will be either a bool or an interface that will hold information
-        //regarding who fired the projectile
-        OnInstantiate(false);
+       
     }
     // Start is called before the first frame update
     void Start()
@@ -64,13 +62,13 @@ public class ProjectileScript : MonoBehaviour
             case true:
                 Debug.Log("PlayerFire");
                 ProjectileMove = Vector2.up * projSpeed;
-                EntityFired = true;
+               
                 break;
 
             //case Enemy
             case false:
 
-                EntityFired = false;
+               
                 player = GameObject.FindGameObjectWithTag("Player");
                 var direction = player.transform.position - transform.position;
                 ProjectileMove = new Vector2(direction.x, direction.y).normalized * projSpeed;
