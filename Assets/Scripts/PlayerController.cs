@@ -89,7 +89,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player Has Fired");
 
-        Instantiate(projectilePrefab, this.transform.position + Vector3.up, Quaternion.identity);
+        Vector2 position = this.transform.position;
+
+        GM.instance.CallSpawnProjectile(true, position);
 
         //if(Mouse1)
         //AttackEvent

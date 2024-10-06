@@ -7,21 +7,19 @@ public class GM : MonoBehaviour
     //singleton format
     public static GM instance;
 
-
+    CombatManager reference;
     void Awake()
     {
         instance = this;
-        if (instance)
-        {
-            DestroyImmediate(instance);
-        }
-
+        
         DontDestroyOnLoad(gameObject);
+
+        reference = GameObject.Find("CombatObj").GetComponent<CombatManager>();
     }
 
     private void OnEnable()
     {
-
+        SpawnProjectile += reference.CreateProjectile;
        
     }
 
@@ -29,6 +27,16 @@ public class GM : MonoBehaviour
     public delegate void ProjectileSpawner(bool whoFired, Vector2 shooterTransform);
 
     public event ProjectileSpawner SpawnProjectile;
+
+
+    public void CallSpawnProjectile(bool whoFired, Vector2 shooterTransform)
+    {
+        Debug.Log("Entity that Fired: " + ((whoFired == true) ? " player" : "enemy"));
+
+        
+
+        SpawnProjectile(whoFired, shooterTransform);
+    }
 
     public delegate void SetUpRound();
 

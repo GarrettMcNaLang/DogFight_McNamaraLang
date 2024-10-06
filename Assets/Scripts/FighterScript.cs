@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -126,13 +127,18 @@ public class FighterScript : EnemyBehavior
 
     }
 
+   
 
     public void AttackEvent()
     {
         Vector2 position = this.transform.position;
+
+      
+
         //GM.instance.SpawnProjectile(false, position);
+        GM.instance.CallSpawnProjectile(false, position);
         
-        
+
     }
   
 

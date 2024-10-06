@@ -11,7 +11,14 @@ public class CombatManager : MonoBehaviour
     Vector2 PlayerFirePos;
     void Awake()
     {
-        GM.instance.SpawnProjectile += CreateProjectile;
+       
+    }
+
+    void OnEnable()
+    {
+        
+        //GM.instance.SpawnProjectile += CreateProjectile;
+        Debug.Log("Combat manager reporting for duty");
     }
     // Start is called before the first frame update
     void Start()
@@ -27,6 +34,7 @@ public class CombatManager : MonoBehaviour
 
     public void CreateProjectile(bool whoFired, Vector2 shooterTransform)
     {
+        Debug.Log("accessing CreateProjectile");
         ProjectileScript ProjReference;
         GameObject prefabInstance;
 
@@ -34,6 +42,7 @@ public class CombatManager : MonoBehaviour
 
             case true:
                 {
+                    Debug.Log("Creating player Projectile");
                     prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
                     
                   
@@ -42,6 +51,7 @@ public class CombatManager : MonoBehaviour
                 }
             case false:
                 {
+                    Debug.Log("Creating enemy projectile");
                     prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
                    
                     break;
