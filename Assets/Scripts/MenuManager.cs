@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    
-    
+    GameObject MainMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,30 @@ public class MenuManager : MonoBehaviour
         
     }
 
+    private void Awake()
+    {
+        Time.timeScale = 0.0f;
+        MainMenu = GameObject.Find("MainMenu");
+
+        MainMenu.SetActive(true);
+    }
     public void StartGame()
+    {
+        GameObject MainUI = GameObject.Find("MainUI");
+
+
+        ActivatePanel(MainUI);
+        DeactivatePanel(MainMenu);
+
+        Time.timeScale = 1.0f;
+    }
+
+    public void ActivatePanel(GameObject Panel)
+    {
+
+    }
+
+    public void DeactivatePanel(GameObject Panel)
     {
 
     }
