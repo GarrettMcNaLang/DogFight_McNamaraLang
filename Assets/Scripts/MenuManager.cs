@@ -7,6 +7,18 @@ public class MenuManager : MonoBehaviour
 {
     GameObject MainMenu;
 
+    GameObject MainUI;
+
+    GameObject Stage;
+
+    GameObject CanvasRef;
+
+    GameObject pauseScreen;
+
+    GameObject instructions;
+
+    bool EscAxis;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,19 +28,38 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        EscAxis |= Input.GetKey(KeyCode.Escape);
+
+        if(EscAxis )
+        {
+            PauseScreen();
+        }
+        EscAxis = false;
     }
 
     private void Awake()
     {
         Time.timeScale = 0.0f;
-        MainMenu = GameObject.Find("MainMenu");
+        CanvasRef = GameObject.Find("Canvas");
+
+        MainMenu = CanvasRef.transform.Find("MainMenu").gameObject;
+
+        MainUI = CanvasRef.transform.Find("MainUI").gameObject;
+
+        Stage = CanvasRef.transform.Find("Stage").gameObject;
+
+        pauseScreen = CanvasRef.transform.Find("PauseMenu").gameObject;
+
+        instructions = CanvasRef.transform.Find("Instructions").gameObject;
+
+        if (MainMenu == null)
+            Debug.Log("MainMenuEmpty");
+
 
         MainMenu.SetActive(true);
     }
     public void StartGame()
     {
-        GameObject MainUI = GameObject.Find("MainUI");
 
 
         ActivatePanel(MainUI);
@@ -39,35 +70,63 @@ public class MenuManager : MonoBehaviour
 
     public void ActivatePanel(GameObject Panel)
     {
-
+        if(Panel == null)
+        {
+            Debug.Log("No argument given in Activate Panel");
+        }
+        Panel.SetActive(true);
     }
 
     public void DeactivatePanel(GameObject Panel)
     {
-
+        Panel.SetActive(false);
     }
 
     public void InstructionsScreen()
     {
+       
 
+
+        ActivatePanel(instructions);
+        DeactivatePanel(MainMenu);
     }
 
     public void ExitGame()
     {
-
+        Debug.Log("ExitingGame and uncoupling events");
+        Application.Quit();
     }
     public void PauseScreen()
     {
+        
+        ActivatePanel(pauseScreen);
 
+        Time.timeScale = 0.0f;
+
+        
+    }
+
+    public void Resume()
+    {
+
+        Debug.Log("Should unpause");
+        DeactivatePanel(pauseScreen);
+
+        Time.timeScale = 1.0f;
     }
 
     public void VictoryScreen()
     {
+        GameObject victory = GameObject.Find("VictoryScreen");
 
+        ActivatePanel(victory);
     }
 
     public void ReturnToMain()
     {
+        ActivatePanel(MainMenu);
+        DeactivatePanel(instructions);
+        DeactivatePanel(pauseScreen);
 
     }
 
