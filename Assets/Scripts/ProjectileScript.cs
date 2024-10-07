@@ -24,12 +24,14 @@ public class ProjectileScript : MonoBehaviour
 
     private GameObject player;
 
+    int Layer;
+
     void Awake()
     {
         pCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
 
-       
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
     // Start is called before the first frame update
     void Start()
@@ -60,21 +62,31 @@ public class ProjectileScript : MonoBehaviour
         {
             //case Player
             case true:
+
+                gameObject.layer = LayerMask.NameToLayer("Enemy");
                 Debug.Log("PlayerFire");
                 ProjectileMove = Vector2.up * projSpeed;
-               
+
+
+
+                
                 break;
 
             //case Enemy
             case false:
 
-               
+                int EnemyIgnore = LayerMask.NameToLayer("EnemyProjectile");
+
+                gameObject.layer = EnemyIgnore;
+
                 player = GameObject.FindGameObjectWithTag("Player");
                 var direction = player.transform.position - transform.position;
                 ProjectileMove = new Vector2(direction.x, direction.y).normalized * projSpeed;
 
                 var rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0, 0, rotation + 90);
+
+                
 
                 Debug.Log("EnemyFired");
                 break;
@@ -94,6 +106,18 @@ public class ProjectileScript : MonoBehaviour
     public void DeleteProjectile()
     {
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.TryGetComponent<PlayerController>(out PlayerController player))
+        {
+            DeleteProjectile();
+        }
+        else if(collision.transform.TryGetComponent<EnemyBehavior>(out EnemyBehavior enemy))
+        {
+            DeleteProjectile();
+        }
     }
     //OnInstantiate/ Constructor
 

@@ -38,12 +38,24 @@ public class CombatManager : MonoBehaviour
         ProjectileScript ProjReference;
         GameObject prefabInstance;
 
+       
+
+        
         switch (whoFired) {
 
             case true:
                 {
-                    Debug.Log("Creating player Projectile");
-                    prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
+                    int FireTwice = 2;
+                    do
+                    {
+                        Debug.Log("Creating player Projectile");
+                        prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
+                        Debug.Log(FireTwice);
+
+                        FireTwice--;
+                    }
+                    while (FireTwice > 0);
+                   
                     
                   
 
@@ -51,8 +63,22 @@ public class CombatManager : MonoBehaviour
                 }
             case false:
                 {
-                    Debug.Log("Creating enemy projectile");
-                    prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
+                    int FireTwice = 2;
+                    do
+                    {
+
+                        Debug.Log("Creating enemy projectile");
+
+                        prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
+                        StartCoroutine(WaitTwoSecond());
+                        Debug.Log(FireTwice);
+
+                        FireTwice--;
+                    }
+                    while (FireTwice > 0);
+                   
+                   
+
                    
                     break;
                 }
@@ -64,5 +90,10 @@ public class CombatManager : MonoBehaviour
 
 
         ProjReference.OnInstantiate(whoFired);
+    }
+
+    IEnumerator WaitTwoSecond()
+    {
+        yield return new WaitForSeconds(2);
     }
 }

@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
             if (_playerHP <= 0)
 
                 Debug.Log("Install Player Death");
+
+            Destroy(gameObject);
         }
     }
 
@@ -114,7 +116,15 @@ public class PlayerController : MonoBehaviour
 
             PlayerHP -= 1;
         }
+
+        else if(collision.gameObject.TryGetComponent<ProjectileScript>(out ProjectileScript projectile))
+        {
+            Debug.Log("hit by enemy projectile");
+
+            PlayerHP -= 1;
+        }
     }
+
 
     public void StayInLimits()
     {

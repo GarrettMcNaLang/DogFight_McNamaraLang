@@ -29,6 +29,7 @@ public abstract class EnemyBehavior : MonoBehaviour
             if (_EnemyLives < 0)
             {
                 Debug.Log("Initiate Enemy Death");
+                Destroy(gameObject);
                 
             }
                 

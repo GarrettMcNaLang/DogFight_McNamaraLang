@@ -40,8 +40,30 @@ public class FighterScript : EnemyBehavior
 
     public GameObject Projectile;
 
-  
+   
+    bool middle;
+    bool reachedMiddle
+    {
+        get
+        {
+            return reachedMiddle;
+        }
+
+        set
+        {
+            reachedMiddle = value;
+
+            if(!reachedMiddle)
+            {
+                AttackEvent();
+                
+            }
+            
+        }
+    }
+
     
+
     public override void Setup()
     {
         //retrieves all ends for the array
@@ -78,38 +100,36 @@ public class FighterScript : EnemyBehavior
 
         //direction from enemy position to middle destination
         Direction = (constantDestinationVector - EnemyPosition).normalized;
-
-        
-        
     }
     // Update is called once per frame
     void Update()
     {
-        //updates position 
-        EnemyPosition = eRB.position;
-
-        //calculates the distance between the Enemy and the middle destination
-        var Distance = Vector2.Distance(EnemyPosition, constantDestinationVector);
-       // Debug.Log(Distance);
-
-        //if the distance is less than 1
-        if (Distance < 1f)
+      
+        if(Vector2.Distance(EnemyPosition, constantDestinationVector) < 1f)
         {
-            //change the direction to one of the randomly selected positions
-            Debug.Log("Changing direction");
-            Direction = (endPositionVector - EnemyPosition).normalized;
-
-
-            Physics.SyncTransforms();
-
-
-            AttackEvent();
+            
         }
+        
+        //calculates the distance between the Enemy and the middle destination
+       
+        // Debug.Log(Distance);
 
        
 
+            
 
+    }
 
+    public bool CheckDistance()
+    {
+       var Distance = Vector2.Distance(EnemyPosition, constantDestinationVector);
+
+        if (Distance > 1f)
+            return true;
+        else
+        Direction = (endPositionVector - EnemyPosition).normalized;
+        Physics.SyncTransforms();
+        return true;
     }
 
     void FixedUpdate()
@@ -131,12 +151,17 @@ public class FighterScript : EnemyBehavior
 
     public void AttackEvent()
     {
+
+        
         Vector2 position = this.transform.position;
 
+
+            //GM.instance.SpawnProjectile(false, position);
+
+            GM.instance.CallSpawnProjectile(false, position);
       
 
-        //GM.instance.SpawnProjectile(false, position);
-        GM.instance.CallSpawnProjectile(false, position);
+       
         
 
     }
@@ -144,10 +169,13 @@ public class FighterScript : EnemyBehavior
 
     public override void KillEntity()
     {
-        
+        Debug.Log("Fighter Down, decreasingenemy");
+
+        EnemyLives -= 1;
     }
 
    
+
     //EnemyMove
 
     //OnHit
