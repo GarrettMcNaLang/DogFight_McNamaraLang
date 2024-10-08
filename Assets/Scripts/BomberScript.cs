@@ -23,6 +23,8 @@ public class BomberScript : EnemyBehavior
         //should possess the EnemyLives variable from base
         EnemyLives -= 1;
 
+        GM.instance.notifyRM(false);
+
         Debug.Log("Enemy killed, call event to decrease Bomber count");
     }
 

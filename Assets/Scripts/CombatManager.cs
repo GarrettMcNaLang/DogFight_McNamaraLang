@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    public GameObject projPrefab;
+    public GameObject PlayerProjPrefab;
+    public GameObject EnemyProjPrefab;
 
 
-
-    Vector2 PlayerFirePos;
+    //Vector2 PlayerFirePos;
     void Awake()
     {
        
@@ -35,65 +35,57 @@ public class CombatManager : MonoBehaviour
     public void CreateProjectile(bool whoFired, Vector2 shooterTransform)
     {
         Debug.Log("accessing CreateProjectile");
-        ProjectileScript ProjReference;
+      
         GameObject prefabInstance;
 
-       
 
-        
-        switch (whoFired) {
+
+
+        switch (whoFired)
+        {
 
             case true:
                 {
-                    int FireTwice = 2;
-                    do
-                    {
-                        Debug.Log("Creating player Projectile");
-                        prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
-                        Debug.Log(FireTwice);
-
-                        FireTwice--;
-                    }
-                    while (FireTwice > 0);
                    
+                        Debug.Log("Creating player Projectile");
+                        prefabInstance = Instantiate(PlayerProjPrefab, shooterTransform + Vector2.up, Quaternion.identity);
+                        
+
                     
-                  
+
+
+
 
                     break;
                 }
             case false:
                 {
-                    int FireTwice = 2;
-                    do
-                    {
+                    
+                    
 
                         Debug.Log("Creating enemy projectile");
 
-                        prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
-                        StartCoroutine(WaitTwoSecond());
-                        Debug.Log(FireTwice);
+                        prefabInstance = Instantiate(EnemyProjPrefab, shooterTransform + Vector2.down, Quaternion.identity);
 
-                        FireTwice--;
-                    }
-                    while (FireTwice > 0);
-                   
-                   
+                     
 
-                   
+                        
+                    
+                  
+
+
+
+
                     break;
                 }
 
-               
+
         }
 
-        ProjReference = prefabInstance.GetComponent<ProjectileScript>();
+        
 
 
-        ProjReference.OnInstantiate(whoFired);
+    }
     }
 
-    IEnumerator WaitTwoSecond()
-    {
-        yield return new WaitForSeconds(2);
-    }
-}
+

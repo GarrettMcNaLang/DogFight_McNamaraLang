@@ -40,7 +40,8 @@ public class FighterScript : EnemyBehavior
 
     public GameObject Projectile;
 
-   
+    bool goToMiddle = false;
+
     bool middle;
     bool reachedMiddle
     {
@@ -53,7 +54,7 @@ public class FighterScript : EnemyBehavior
         {
             reachedMiddle = value;
 
-            if(!reachedMiddle)
+            if(goToMiddle)
             {
                 AttackEvent();
                 
@@ -89,9 +90,9 @@ public class FighterScript : EnemyBehavior
         if (Player != null)
             Debug.Log("Player object is full");
 
-       //gets the inital position for the rigibody, used for distance and movement calculations
-        EnemyPosition = eRB.position;
+        //gets the inital position for the rigibody, used for distance and movement calculations
 
+        EnemyPosition = eRB.position;
         //position of randomly selected end position
         endPositionVector = endPosition.transform.position;
 
@@ -104,11 +105,22 @@ public class FighterScript : EnemyBehavior
     // Update is called once per frame
     void Update()
     {
-      
-        if(Vector2.Distance(EnemyPosition, constantDestinationVector) < 1f)
+        EnemyPosition = eRB.position;
+
+        if (!goToMiddle && Vector2.Distance(EnemyPosition, constantDestinationVector) < 1f)
         {
+            Direction = (endPositionVector - EnemyPosition).normalized;
+
             
+            Physics.SyncTransforms();
+
+            Debug.Log("Changing Direction");
+
+            AttackEvent();
+            goToMiddle  = true;
         }
+
+
         
         //calculates the distance between the Enemy and the middle destination
        
@@ -127,8 +139,7 @@ public class FighterScript : EnemyBehavior
         if (Distance > 1f)
             return true;
         else
-        Direction = (endPositionVector - EnemyPosition).normalized;
-        Physics.SyncTransforms();
+        
         return true;
     }
 
@@ -172,6 +183,9 @@ public class FighterScript : EnemyBehavior
         Debug.Log("Fighter Down, decreasingenemy");
 
         EnemyLives -= 1;
+
+        GM.instance.notifyRM(true);
+
     }
 
    

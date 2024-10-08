@@ -1407,7 +1407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6248bce58d6d57b4caaca350c0eb1dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projPrefab: {fileID: 6555888921824220439, guid: 18c9a7a985464c34e94aea3012fddb36, type: 3}
+  PlayerProjPrefab: {fileID: 6224478875212298646, guid: 353f7f53e6937914f9366cd40cbd0990, type: 3}
+  EnemyProjPrefab: {fileID: 4897642376389116440, guid: 18c9a7a985464c34e94aea3012fddb36, type: 3}
 --- !u!4 &516349186
 Transform:
   m_ObjectHideFlags: 0
@@ -2689,7 +2690,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1015
+    m_Bits: 4087
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6783,7 +6784,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3964024548006556101, guid: 8be69a5434a3e8d408a44b45ff033a27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.55
+      value: -27.04
       objectReference: {fileID: 0}
     - target: {fileID: 3964024548006556101, guid: 8be69a5434a3e8d408a44b45ff033a27, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6824,6 +6825,10 @@ PrefabInstance:
     - target: {fileID: 9094045715277703061, guid: 8be69a5434a3e8d408a44b45ff033a27, type: 3}
       propertyPath: m_Name
       value: Enemy_Fighter
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094045715277703061, guid: 8be69a5434a3e8d408a44b45ff033a27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7035,6 +7040,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specificRound: 0
+  Bombers: {fileID: 0}
+  Fighters: {fileID: 0}
 --- !u!4 &2120685699
 Transform:
   m_ObjectHideFlags: 0

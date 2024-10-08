@@ -38,9 +38,30 @@ public class GM : MonoBehaviour
         SpawnProjectile(whoFired, shooterTransform);
     }
 
+    public delegate void StartGame();
+
+    public event StartGame initiateRoundManager;
+
+    public void CallRoundManager()
+    {
+        initiateRoundManager();
+    }
+
+    public delegate void EnemyKilledEvent(bool diditHappen);
+
+    public event EnemyKilledEvent _EnemyKilledEvent;
+
+    public void notifyRM(bool notification)
+    {
+        if (_EnemyKilledEvent != null) 
+            _EnemyKilledEvent(notification);
+    }
+
     public delegate void SetUpRound();
 
     public event SetUpRound RoundInstance;
+
+    
 
     public delegate void PlayerDeath();
 

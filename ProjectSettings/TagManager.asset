@@ -19,8 +19,8 @@ TagManager:
   - GameObjects
   - Player
   - Enemy
-  - 
-  - 
+  - PlayerProjectile
+  - EnemyProjectile
   - 
   - 
   - 

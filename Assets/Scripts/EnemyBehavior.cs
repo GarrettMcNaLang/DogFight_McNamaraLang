@@ -77,6 +77,8 @@ public abstract class EnemyBehavior : MonoBehaviour
             KillEntity();
 
             Debug.Log("call event to decrease number of targets to destroy");
+
+
         }
     }
 

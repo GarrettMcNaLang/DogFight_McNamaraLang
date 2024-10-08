@@ -65,6 +65,8 @@ public class MenuManager : MonoBehaviour
         ActivatePanel(MainUI);
         DeactivatePanel(MainMenu);
 
+
+
         Time.timeScale = 1.0f;
     }
 
