@@ -42,7 +42,7 @@ public class GM : MonoBehaviour
 
     public event StartGame initiateRoundManager;
 
-    public void CallRoundManager()
+    public void StartRoundManager()
     {
         initiateRoundManager();
     }

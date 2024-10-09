@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class roundManager : MonoBehaviour
 {
+    GameObject PlayerPrefab;
+
+    GameObject PlayerSpawn;
 
     private int _BomberNum = 5;
 
@@ -39,7 +42,7 @@ public class roundManager : MonoBehaviour
 
     void Awake()
     {
-        GM.instance.initiateRoundManager += RoundFunction;
+        GM.instance.initiateRoundManager += RoundOne;
 
         GM.instance._EnemyKilledEvent += EnemyWasKilled;
 
@@ -67,47 +70,19 @@ public class roundManager : MonoBehaviour
         
     }
 
-    public void RoundFunction()
+
+
+    public void RoundOne()
     {
-        switch(specificRound)
-        {
-            case Rounds.One:
-                {
-                    BomberNum += 0;
-
-                    FighterNum += 0;
-
-                    isLastRound = true;
-
-
-                    //GM.Instance.RoundStart(BomberNum, FighterNum);
-                    break;
-                }
-            //case Rounds.Two:
-            //    {
-            //        BomberNum += 5;
-
-            //        FighterNum += 5;
-
-            //        //GM.Instance.RoundStart(BomberNum, FighterNum);
-            //        break;
-            //    }
-            //    case Rounds.Three:
-            //    {
-            //        BomberNum += 5;
-
-            //        FighterNum += 5;
-
-            //        //GM.Instance.RoundStart(BomberNum, FighterNum);
-            //        break;
-            //    }
-        }
+       
 
         if (BomberNum == 0 && FighterNum == 0)
         {
             ChangeRound();
         }
     }
+
+
 
     public void RoundSpawn()
     {

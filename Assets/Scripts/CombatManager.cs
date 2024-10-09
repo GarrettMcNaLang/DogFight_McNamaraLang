@@ -4,40 +4,39 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    public GameObject PlayerProjPrefab;
-    public GameObject EnemyProjPrefab;
+    public GameObject projPrefab;
 
 
-    //Vector2 PlayerFirePos;
+
+    Vector2 PlayerFirePos;
     void Awake()
     {
-       
+
     }
 
     void OnEnable()
     {
-        
+
         //GM.instance.SpawnProjectile += CreateProjectile;
         Debug.Log("Combat manager reporting for duty");
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void CreateProjectile(bool whoFired, Vector2 shooterTransform)
     {
         Debug.Log("accessing CreateProjectile");
-      
+        ProjectileScript ProjReference;
         GameObject prefabInstance;
-
 
 
 
@@ -46,30 +45,13 @@ public class CombatManager : MonoBehaviour
 
             case true:
                 {
-                   
+                    Debug.Log("Creating player Projectile");
+                    prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
+
+                    StartCoroutine(WaitTwoSecond());
                         Debug.Log("Creating player Projectile");
-                        prefabInstance = Instantiate(PlayerProjPrefab, shooterTransform + Vector2.up, Quaternion.identity);
-                        
-
-                    
-
-
-
-
-                    break;
-                }
-            case false:
-                {
-                    
-                    
-
-                        Debug.Log("Creating enemy projectile");
-
-                        prefabInstance = Instantiate(EnemyProjPrefab, shooterTransform + Vector2.down, Quaternion.identity);
-
+                     //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
                      
-
-                        
                     
                   
 
@@ -78,14 +60,34 @@ public class CombatManager : MonoBehaviour
 
                     break;
                 }
+            case false:
+                {
+                    Debug.Log("Creating enemy projectile");
+                    prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
+                  
+                   
+                        Debug.Log("Creating enemy projectile");
+                      //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
+                      
+                       
+                      
+
+
+                    break;
+                }
 
 
         }
 
-        
+        ProjReference = prefabInstance.GetComponent<ProjectileScript>();
 
 
+        ProjReference.OnInstantiate(whoFired);
     }
+    IEnumerator WaitTwoSecond()
+    {
+        yield return new WaitForSeconds(2);
     }
+}
 
 

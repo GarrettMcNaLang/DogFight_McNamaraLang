@@ -3,63 +3,107 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class ProjectileScript : MonoBehaviour
+public class ProjectileScript : MonoBehaviour
 {
     //Vector2 for movement
-    protected Vector2 ProjectileMove;
-    
+    Vector2 ProjectileMove;
+
     //the speed of the projectile
     public float projSpeed;
 
     //collider for the projectile
-    protected Collider2D pCollider;
+    private Collider2D pCollider;
 
     //rigidbody of the projectile
-    protected Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     //decides how long an object lasts until death
     public float timeUntilDeath;
 
+    bool EntityFired;
+
+    private GameObject player;
+
+    
+
+  
     void Awake()
     {
         pCollider = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
+
+
         
-        if (TryGetComponent<Rigidbody2D>(out rb))
-            Debug.Log("rigibody empty");
-
-        //gameObject.layer = LayerMask.NameToLayer("Default");
-
     }
-
-    //void Update()
-    //{
-    //    float timer += Time.deltaTime;
-
-    //    if(timer >= timeUntilDeath)
-    //    {
-    //        DeleteProjectile();
-    //    }
-    //}
+   
     void FixedUpdate()
     {
-        
+
         rb.MovePosition(rb.position + (ProjectileMove) * Time.deltaTime);
 
         //else if(EntityFired == false)
 
     }
 
-    public abstract void DetermineProjectileMove();
+    //will establish who fired this projectile, based on the argument (which will be an event call that is sent by the 
+    //enemy or player)
+    public void OnInstantiate(bool whoFired)
+    {
+        switch (whoFired)
+        {
+            //case Player
+            case true:
+                
+                Debug.Log("PlayerFire");
+                ProjectileMove = Vector2.up * projSpeed;
 
-   
+
+                break;
+
+            //case Enemy
+            case false:
+
+
+               
+               
+                player = GameObject.FindGameObjectWithTag("Player");
+                var direction = player.transform.position - transform.position;
+                ProjectileMove = new Vector2(direction.x, direction.y).normalized * (projSpeed * 2);
+
+                var rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, 0, rotation + 90);
+
+
+                Debug.Log("EnemyFired");
+                break;
+        }
+
+        StartCoroutine(StartCount());
+    }
+
+    //IEnumerator that calls the DeleteProjectile function upon the WaitForSeconds object expiring
+    IEnumerator StartCount()
+    {
+        yield return new WaitForSeconds(timeUntilDeath);
+        DeleteProjectile();
+    }
 
     //on Call, will destroy itself
-    protected void DeleteProjectile()
+    public void DeleteProjectile()
     {
         Destroy(gameObject);
     }
-
-   
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.TryGetComponent<PlayerController>(out PlayerController player))
+        {
+            DeleteProjectile();
+        }
+        else if (collision.transform.TryGetComponent<EnemyBehavior>(out EnemyBehavior enemy))
+        {
+            DeleteProjectile();
+        }
+    }
     //OnInstantiate/ Constructor
 
     //receive if it was fired by player or by enemy
