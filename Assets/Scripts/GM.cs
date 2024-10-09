@@ -15,6 +15,8 @@ public class GM : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         reference = GameObject.Find("CombatObj").GetComponent<CombatManager>();
+
+        Debug.Log("Game Manager reporting for duty");
     }
 
     private void OnEnable()
@@ -47,14 +49,15 @@ public class GM : MonoBehaviour
         initiateRoundManager();
     }
 
+   
     public delegate void EnemyKilledEvent(bool diditHappen);
 
-    public event EnemyKilledEvent _EnemyKilledEvent;
+    public event EnemyKilledEvent Enemykilledevent;
 
     public void notifyRM(bool notification)
     {
-        if (_EnemyKilledEvent != null) 
-            _EnemyKilledEvent(notification);
+        if (Enemykilledevent != null) 
+            Enemykilledevent(notification);
     }
 
     public delegate void SetUpRound();

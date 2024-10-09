@@ -54,7 +54,7 @@ public class ProjectileScript : MonoBehaviour
             //case Player
             case true:
                 
-                Debug.Log("PlayerFire");
+                //Debug.Log("PlayerFire");
                 ProjectileMove = Vector2.up * projSpeed;
 
 

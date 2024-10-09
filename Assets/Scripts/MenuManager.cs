@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,12 @@ public class MenuManager : MonoBehaviour
     GameObject pauseScreen;
 
     GameObject instructions;
+
+    public TextMeshProUGUI bomberText;
+
+    public TextMeshProUGUI fighterText;
+
+    private TextMeshProUGUI playerLives;
 
     bool EscAxis;
 
@@ -52,10 +59,13 @@ public class MenuManager : MonoBehaviour
 
         instructions = CanvasRef.transform.Find("Instructions").gameObject;
 
+
         if (MainMenu == null)
             Debug.Log("MainMenuEmpty");
 
 
+
+        Debug.Log("MenuManager Reporting for duty");
         MainMenu.SetActive(true);
     }
     public void StartGame()
@@ -65,9 +75,22 @@ public class MenuManager : MonoBehaviour
         ActivatePanel(MainUI);
         DeactivatePanel(MainMenu);
 
-
+        GM.instance.StartRoundManager();
 
         Time.timeScale = 1.0f;
+    }
+
+    public void ChangeUI()
+    {
+        bomberText.text = "Bombers: " + roundManager.BomberNum;
+
+        fighterText.text = "Fighters: " + roundManager.FighterNum;
+
+       
+
+        GameObject PlayerRef = GameObject.Find("Player");
+
+        playerLives.text = "Lives: " + PlayerRef.GetComponent<PlayerController>().PlayerHP;
     }
 
     public void ActivatePanel(GameObject Panel)

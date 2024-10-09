@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class roundManager : MonoBehaviour
 {
-    GameObject PlayerPrefab;
+    public GameObject PlayerPrefab;
 
-    GameObject PlayerSpawn;
+   public GameObject PlayerSpawn;
 
-    private int _BomberNum = 5;
+   static private int _BomberNum = 5;
 
-    public int BomberNum
+   static public int BomberNum
     {
         get { return _BomberNum; }
 
         set { _BomberNum = value; }
     }
 
-    private int _FighterNum = 5;
+   static private int _FighterNum = 5;
 
-    public int FighterNum
+   static public int FighterNum
     {
         get { return _FighterNum; }
 
@@ -28,10 +28,7 @@ public class roundManager : MonoBehaviour
 
     bool isLastRound;
 
-    public enum Rounds {One, Two, Three};
-
-    public Rounds specificRound;
-
+   
     public GameObject Bombers;
 
     public GameObject Fighters;
@@ -44,19 +41,17 @@ public class roundManager : MonoBehaviour
     {
         GM.instance.initiateRoundManager += RoundOne;
 
-        GM.instance._EnemyKilledEvent += EnemyWasKilled;
-
-        specificRound = Rounds.One;
+        GM.instance.Enemykilledevent += EnemyWasKilled;
 
         BombersSpawn = GameObject.FindGameObjectsWithTag("TopOfScreen");
 
-        if (BombersSpawn != null)
-            Debug.Log("Bomber Spawns found");
+        //if (BombersSpawn != null)
+        //    Debug.Log("Bomber Spawns found");
 
         FightersSpawn = GameObject.FindGameObjectsWithTag("SidesOfScreen");
 
-        if (FightersSpawn != null)
-            Debug.Log("Fighter Spawns found");
+        //if (FightersSpawn != null)
+        //    Debug.Log("Fighter Spawns found");
     }
     // Start is called before the first frame update
     void Start()
@@ -70,11 +65,15 @@ public class roundManager : MonoBehaviour
         
     }
 
-
+    
 
     public void RoundOne()
     {
-       
+
+   
+       Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity); 
+
+
 
         if (BomberNum == 0 && FighterNum == 0)
         {
@@ -86,32 +85,32 @@ public class roundManager : MonoBehaviour
 
     public void RoundSpawn()
     {
-        int MaxEnemyOnScreen = 4;
+        //int MaxEnemyOnScreen = 4;
 
-        int numberSpawn = 0;
+        //int numberSpawn = 0;
 
-        while(MaxEnemyOnScreen >= numberSpawn) {
+        //while(MaxEnemyOnScreen >= numberSpawn) {
 
-            GameObject BomberSpawnPoint = BombersSpawn[Random.Range(0, BombersSpawn.Length)];
+        //    GameObject BomberSpawnPoint = BombersSpawn[Random.Range(0, BombersSpawn.Length)];
 
-            GameObject FighterSpawnPoint = FightersSpawn[Random.Range(0, FightersSpawn.Length)];
+        //    GameObject FighterSpawnPoint = FightersSpawn[Random.Range(0, FightersSpawn.Length)];
 
-            Instantiate(Bombers, BomberSpawnPoint.transform.position, Quaternion.identity);
-            numberSpawn++;
+        //    Instantiate(Bombers, BomberSpawnPoint.transform.position, Quaternion.identity);
+        //    numberSpawn++;
 
             
-            Instantiate(Fighters, FighterSpawnPoint.transform.position, Quaternion.identity);
-            numberSpawn++;
+        //    Instantiate(Fighters, FighterSpawnPoint.transform.position, Quaternion.identity);
+        //    numberSpawn++;
 
-            StartCoroutine(SpawnedTwo());
-        }
+        //    StartCoroutine(SpawnedTwo());
+        //}
 
        
 
-        if (BomberNum == 0 && FighterNum == 0)
-        {
-            return;
-        }
+        //if (BomberNum == 0 && FighterNum == 0)
+        //{
+        //    return;
+        //}
     }
 
     IEnumerator SpawnedTwo()

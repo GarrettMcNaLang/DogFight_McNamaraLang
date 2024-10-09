@@ -11,7 +11,7 @@ public class CombatManager : MonoBehaviour
     Vector2 PlayerFirePos;
     void Awake()
     {
-
+        Debug.Log("Combat Manager Reporting for duty");
     }
 
     void OnEnable()
@@ -34,7 +34,7 @@ public class CombatManager : MonoBehaviour
 
     public void CreateProjectile(bool whoFired, Vector2 shooterTransform)
     {
-        Debug.Log("accessing CreateProjectile");
+       // Debug.Log("accessing CreateProjectile");
         ProjectileScript ProjReference;
         GameObject prefabInstance;
 
@@ -49,7 +49,7 @@ public class CombatManager : MonoBehaviour
                     prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
 
                     StartCoroutine(WaitTwoSecond());
-                        Debug.Log("Creating player Projectile");
+                        //Debug.Log("Creating player Projectile");
                      //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
                      
                     
