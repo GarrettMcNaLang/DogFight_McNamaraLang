@@ -23,26 +23,11 @@ public class PlayerController : MonoBehaviour
 
     //playerHP (Get and Set)
 
-    private int _playerHP = 3;
-
-    public int PlayerHP 
-    { 
-        get { return _playerHP; }
-
-        set { _playerHP = value;
-
-            Debug.LogFormat("Player HP = {0}", _playerHP);
-
-            if (_playerHP <= 0)
-
-                Debug.Log("Install Player Death");
-
-            Destroy(gameObject);
-        }
-    }
-
+    
     //Projectile prefab
     public GameObject projectilePrefab;
+
+    Camera gamePlayCamera;
 
     void Awake()
     {
@@ -51,7 +36,10 @@ public class PlayerController : MonoBehaviour
 
         //
         pCollider = GetComponent<Collider2D>();
-    
+
+        gamePlayCamera = GameObject.Find("GameplayCamera").GetComponent<Camera>();
+
+       // StayInLimits();
     }
     // Start is called before the first frame update
     void Start()
@@ -74,6 +62,8 @@ public class PlayerController : MonoBehaviour
             AttackEvent();
         }
         LeftClick = false;
+
+       StayInLimits();
 
     }
 
@@ -114,21 +104,29 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Hit by Enemy, subtract 1 health");
 
-            PlayerHP -= 1;
+            GM.instance.PlayerHP -= 1;
         }
 
         else if(collision.gameObject.TryGetComponent<ProjectileScript>(out ProjectileScript projectile))
         {
             Debug.Log("hit by enemy projectile");
 
-            PlayerHP -= 1;
+            GM.instance.PlayerHP -= 1;
         }
     }
 
 
     public void StayInLimits()
     {
-        
+
+       
+        Vector3 CurrPosition = gamePlayCamera.WorldToViewportPoint(transform.position);
+
+        CurrPosition.x = Mathf.Clamp01(CurrPosition.x);
+
+        CurrPosition.y = Mathf.Clamp01(CurrPosition.y);
+
+        transform.position = Camera.main.ViewportToWorldPoint(CurrPosition);
         //StayinLimits
 
         //Stay within these viewport coordinates

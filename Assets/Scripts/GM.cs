@@ -4,6 +4,40 @@ using UnityEngine;
 
 public class GM : MonoBehaviour
 {
+
+    private int _MaxEnemiesOnScreen = 4;
+
+    public int maxEnemiesOnScreen {
+
+        get { return _MaxEnemiesOnScreen; }
+
+        set { _MaxEnemiesOnScreen = value;
+
+        }
+        }
+
+    private int _playerHP = 3;
+
+    public int PlayerHP
+    {
+        get { return _playerHP; }
+
+        set
+        {
+            _playerHP = value;
+
+            Debug.LogFormat("Player HP = {0}", _playerHP);
+
+            if (_playerHP <= 0)
+
+                Debug.Log("Install Player Death");
+
+            Destroy(gameObject);
+        }
+    }
+
+
+
     //singleton format
     public static GM instance;
 
@@ -69,6 +103,8 @@ public class GM : MonoBehaviour
     public delegate void PlayerDeath();
 
     public event PlayerDeath PlayerDeathEvent;
+
+   
     //Spanws (Enemies and Players
 
     //EnemyCount in Wave (Get Set)

@@ -18,6 +18,8 @@ public abstract class EnemyBehavior : MonoBehaviour
     //Each enemy will have one life, and if they are hit by a projectile from the player, they are killed
     protected int _EnemyLives = 1;
 
+    bool isVisible;
+
     protected int EnemyLives
     {
         get { return _EnemyLives; }
@@ -26,7 +28,7 @@ public abstract class EnemyBehavior : MonoBehaviour
         {
             _EnemyLives = value;
 
-            if (_EnemyLives < 0)
+            if (_EnemyLives <= 0)
             {
                 Debug.Log("Initiate Enemy Death");
                 Destroy(gameObject);
@@ -90,6 +92,43 @@ public abstract class EnemyBehavior : MonoBehaviour
     protected void KillOnLeaveCameraView()
     {
 
+    }
+
+    void OnBecameVisible()
+    {
+        isVisible = true;
+
+       
+    }
+
+    void OnBecameInvisible()
+    {
+        isVisible = false;
+
+        
+        if (!isVisible)
+        {
+            //StartCoroutine(WaitThenKill());
+
+            Destroy(gameObject);
+
+            Debug.Log("Object destroyed");
+        }
+       
+        
+
+    }
+
+    IEnumerator WaitThenKill()
+    {
+        if (isVisible)
+        yield break;
+        else if(!isVisible)
+        {
+            yield return new WaitForSeconds(3);
+           
+        }
+       
     }
     //Onhit
     //EnemyMove

@@ -50,6 +50,8 @@ public class roundManager : MonoBehaviour
 
         FightersSpawn = GameObject.FindGameObjectsWithTag("SidesOfScreen");
 
+        Debug.Log("RoundManager reporting for duty");
+
         //if (FightersSpawn != null)
         //    Debug.Log("Fighter Spawns found");
     }
@@ -70,9 +72,15 @@ public class roundManager : MonoBehaviour
     public void RoundOne()
     {
 
-   
-       Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity); 
 
+        Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
+
+
+
+
+        Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
+
+        Instantiate(Fighters, FightersSpawn[Random.Range(0,FightersSpawn.Length)].transform.position, Quaternion.identity);
 
 
         if (BomberNum == 0 && FighterNum == 0)
@@ -85,6 +93,9 @@ public class roundManager : MonoBehaviour
 
     public void RoundSpawn()
     {
+
+       
+
         //int MaxEnemyOnScreen = 4;
 
         //int numberSpawn = 0;
@@ -98,14 +109,14 @@ public class roundManager : MonoBehaviour
         //    Instantiate(Bombers, BomberSpawnPoint.transform.position, Quaternion.identity);
         //    numberSpawn++;
 
-            
+
         //    Instantiate(Fighters, FighterSpawnPoint.transform.position, Quaternion.identity);
         //    numberSpawn++;
 
         //    StartCoroutine(SpawnedTwo());
         //}
 
-       
+
 
         //if (BomberNum == 0 && FighterNum == 0)
         //{

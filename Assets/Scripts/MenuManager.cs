@@ -22,10 +22,11 @@ public class MenuManager : MonoBehaviour
 
     public TextMeshProUGUI fighterText;
 
-    private TextMeshProUGUI playerLives;
+    public TextMeshProUGUI playerLives;
 
     bool EscAxis;
 
+    GameObject PlayerRef;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,8 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
+
+        
         Time.timeScale = 0.0f;
         CanvasRef = GameObject.Find("Canvas");
 
@@ -63,34 +66,59 @@ public class MenuManager : MonoBehaviour
         if (MainMenu == null)
             Debug.Log("MainMenuEmpty");
 
-
+        
 
         Debug.Log("MenuManager Reporting for duty");
         MainMenu.SetActive(true);
     }
     public void StartGame()
     {
-
+        GM.instance.StartRoundManager();
 
         ActivatePanel(MainUI);
         DeactivatePanel(MainMenu);
 
-        GM.instance.StartRoundManager();
 
+        ChangeUI();
+
+        Debug.Log("has left function");
         Time.timeScale = 1.0f;
     }
 
     public void ChangeUI()
     {
-        bomberText.text = "Bombers: " + roundManager.BomberNum;
+        bomberText.text = "Bombers:" + roundManager.BomberNum;
 
-        fighterText.text = "Fighters: " + roundManager.FighterNum;
+        fighterText.text = "Fighters:" + roundManager.FighterNum;
 
+        playerLives.text = "Lives: " + GM.instance.PlayerHP;
+
+        //PlayerRef = GameObject.Find("Player");
+
+        //if (PlayerRef.TryGetComponent<PlayerController>(out PlayerController playerRef))
+        //{
+
+        //    playerLives.text = "Lives: " + PlayerRef.GetComponent<PlayerController>().PlayerHP;
+        //}
+        //else
+        //{
+        //    StartCoroutine(WaitAndCheck());
+
+        //    playerLives.text = "Lives: " + PlayerRef.GetComponent<PlayerController>().PlayerHP;
+        //}
+            
+
+
+        //Debug.Log(PlayerRef.GetComponent<PlayerController>().PlayerHP);
+    }
+
+    IEnumerator WaitAndCheck()
+    {
+        //counting to until avaialabe
+        yield return new WaitForSeconds(5);
        
 
-        GameObject PlayerRef = GameObject.Find("Player");
 
-        playerLives.text = "Lives: " + PlayerRef.GetComponent<PlayerController>().PlayerHP;
     }
 
     public void ActivatePanel(GameObject Panel)
@@ -155,8 +183,5 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public void ChangeRoundValues()
-    {
-       
-    }
+   
 }
