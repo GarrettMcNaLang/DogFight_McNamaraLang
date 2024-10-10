@@ -37,6 +37,10 @@ public class roundManager : MonoBehaviour
 
     GameObject[] FightersSpawn;
 
+    enum RoundNumber {One};
+
+    RoundNumber CurrRound;
+
     void Awake()
     {
         GM.instance.initiateRoundManager += RoundOne;
@@ -54,7 +58,10 @@ public class roundManager : MonoBehaviour
 
         //if (FightersSpawn != null)
         //    Debug.Log("Fighter Spawns found");
+        CurrRound = RoundNumber.One;
     }
+
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -64,23 +71,51 @@ public class roundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        switch(CurrRound)
+        {
+            case RoundNumber.One:
+                {
+                    Debug.Log("Round 1 activated");
+                    RoundOne();
+                    break;
+                }
+            
+        }
     }
 
-    
+    public void SpawnPlayer()
+    {
+        Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
+    }
 
     public void RoundOne()
     {
+        SpawnPlayer();
+
+        bool stillGoing = true;
+        do
+        {
+            
+
+            Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
+
+            
+
+            Instantiate(Fighters, FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position, Quaternion.identity);
+
+            StartCoroutine(SpawnedTwo());
+
+            if (BomberNum > 0 && FighterNum > 0)
+                stillGoing = true;
+            else
+                stillGoing = false;
+
+        } while (stillGoing != false);
 
 
-        Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
+       // RoundSpawn();
 
 
-
-
-        Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
-
-        Instantiate(Fighters, FightersSpawn[Random.Range(0,FightersSpawn.Length)].transform.position, Quaternion.identity);
 
 
         if (BomberNum == 0 && FighterNum == 0)
@@ -126,7 +161,7 @@ public class roundManager : MonoBehaviour
 
     IEnumerator SpawnedTwo()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
     }
 
     public void ChangeRound()
