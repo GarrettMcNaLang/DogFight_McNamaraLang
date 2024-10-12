@@ -6,7 +6,27 @@ using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour
 {
-  
+
+    private int _playerHP = 3;
+
+    public int PlayerHP
+    {
+        get { return _playerHP; }
+
+        set
+        {
+            _playerHP = value;
+
+
+            Debug.LogFormat("Player HP = {0}", _playerHP);
+
+            if (_playerHP <= 0)
+                Destroy(gameObject);
+            Debug.Log("Install Player Death");
+
+           
+        }
+    }
     //speed variable
     public float speed;
 
@@ -104,14 +124,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Hit by Enemy, subtract 1 health");
 
-            GM.instance.PlayerHP -= 1;
+            PlayerHP -= 1;
         }
 
         else if(collision.gameObject.TryGetComponent<ProjectileScript>(out ProjectileScript projectile))
         {
             Debug.Log("hit by enemy projectile");
 
-            GM.instance.PlayerHP -= 1;
+            PlayerHP -= 1;
         }
     }
 

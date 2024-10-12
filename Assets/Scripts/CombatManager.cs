@@ -46,7 +46,9 @@ public class CombatManager : MonoBehaviour
             case true:
                 {
                     Debug.Log("Creating player Projectile");
-                    prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
+                    //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
+
+                    
 
                     StartCoroutine(WaitTwoSecond());
                         //Debug.Log("Creating player Projectile");

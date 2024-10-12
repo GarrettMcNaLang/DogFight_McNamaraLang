@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    public static event Action playerDeath;
+
     GameObject MainMenu;
 
     GameObject MainUI;
@@ -26,6 +29,8 @@ public class MenuManager : MonoBehaviour
 
     bool EscAxis;
 
+    roundManager RMreference;
+
     GameObject PlayerRef;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +48,8 @@ public class MenuManager : MonoBehaviour
             PauseScreen();
         }
         EscAxis = false;
+
+       
     }
 
     private void Awake()
@@ -62,15 +69,29 @@ public class MenuManager : MonoBehaviour
 
         instructions = CanvasRef.transform.Find("Instructions").gameObject;
 
+        GM.instance.Playerhealthtransmit += ChangeHealth;
+
+        GM.instance.Fightertransmit += ChangeFighterCount;
+
+        GM.instance.Bombertransmit += ChangeBomberCount;
 
         if (MainMenu == null)
             Debug.Log("MainMenuEmpty");
 
-        
 
+     
+
+
+       
         Debug.Log("MenuManager Reporting for duty");
         MainMenu.SetActive(true);
     }
+
+    private void Change(int Bombers)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void StartGame()
     {
         GM.instance.StartRoundManager();
@@ -79,19 +100,32 @@ public class MenuManager : MonoBehaviour
         DeactivatePanel(MainMenu);
 
 
-        ChangeUI();
+       // ChangeUI();
 
         Debug.Log("has left function");
         Time.timeScale = 1.0f;
     }
 
+    public void ChangeHealth(int NewHealth)
+    {
+        playerLives.text = "Player Lives: " + NewHealth;
+    }
+
+    public void ChangeBomberCount(int Newbomber)
+    {
+        bomberText.text = "Bombers: " + Newbomber;
+
+    }
+
+    public void ChangeFighterCount(int NewFighter)
+    {
+        fighterText.text = "Fighters: " + NewFighter;
+
+    }
+
     public void ChangeUI()
     {
-        bomberText.text = "Bombers:" + roundManager.BomberNum;
-
-        fighterText.text = "Fighters:" + roundManager.FighterNum;
-
-        playerLives.text = "Lives: " + GM.instance.PlayerHP;
+       
 
         //PlayerRef = GameObject.Find("Player");
 

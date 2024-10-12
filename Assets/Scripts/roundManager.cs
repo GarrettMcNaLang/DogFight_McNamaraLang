@@ -8,24 +8,33 @@ public class roundManager : MonoBehaviour
 
    public GameObject PlayerSpawn;
 
-   static private int _BomberNum = 5;
+    private int _BomberNum = 5;
 
-   static public int BomberNum
+   public int BomberNum
     {
         get { return _BomberNum; }
 
-        set { _BomberNum = value; }
+        set { _BomberNum = value;
+
+            GM.instance.ChangeBomberCount(_BomberNum);
+            Debug.Log(_BomberNum);
+        }
     }
 
-   static private int _FighterNum = 5;
+    private int _FighterNum = 5;
 
-   static public int FighterNum
+    public int FighterNum
     {
         get { return _FighterNum; }
 
-        set { _FighterNum = value; }
+        set { _FighterNum = value;
+
+            GM.instance.ChangeFighterCount(_FighterNum);
+            Debug.Log(_FighterNum);
+        }
     }
 
+    public int spawnLimit;
     bool isLastRound;
 
    
@@ -41,6 +50,7 @@ public class roundManager : MonoBehaviour
 
     RoundNumber CurrRound;
 
+    bool stillGoing;
     void Awake()
     {
         GM.instance.initiateRoundManager += RoundOne;
@@ -49,23 +59,25 @@ public class roundManager : MonoBehaviour
 
         BombersSpawn = GameObject.FindGameObjectsWithTag("TopOfScreen");
 
-        //if (BombersSpawn != null)
-        //    Debug.Log("Bomber Spawns found");
+        if (BombersSpawn != null)
+            Debug.Log("Bomber Spawns found");
 
         FightersSpawn = GameObject.FindGameObjectsWithTag("SidesOfScreen");
 
         Debug.Log("RoundManager reporting for duty");
 
-        //if (FightersSpawn != null)
-        //    Debug.Log("Fighter Spawns found");
+        if (FightersSpawn != null)
+           Debug.Log("Fighter Spawns found");
         CurrRound = RoundNumber.One;
+
+       
     }
 
    
     // Start is called before the first frame update
     void Start()
     {
-        
+        SpawnPlayer();
     }
 
     // Update is called once per frame
@@ -76,13 +88,24 @@ public class roundManager : MonoBehaviour
             case RoundNumber.One:
                 {
                     Debug.Log("Round 1 activated");
-                    RoundOne();
+                    spawnLimit = 2;
                     break;
                 }
             
         }
+
+        if(BomberNum > 0 && FighterNum > 0)
+        {
+            stillGoing = true;
+            
+        }
+        else
+        {
+            stillGoing = false;
+        }
     }
 
+   
     public void SpawnPlayer()
     {
         Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
@@ -90,41 +113,47 @@ public class roundManager : MonoBehaviour
 
     public void RoundOne()
     {
-        SpawnPlayer();
 
-        bool stillGoing = true;
-        do
-        {
-            
+        Debug.Log("In Round 1 program");
 
-            Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
+        StartCoroutine(RoundOneWorking());
 
-            
-
-            Instantiate(Fighters, FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position, Quaternion.identity);
-
-            StartCoroutine(SpawnedTwo());
-
-            if (BomberNum > 0 && FighterNum > 0)
-                stillGoing = true;
-            else
-                stillGoing = false;
-
-        } while (stillGoing != false);
-
-
-       // RoundSpawn();
-
-
-
+        // RoundSpawn();
 
         if (BomberNum == 0 && FighterNum == 0)
         {
             ChangeRound();
         }
+
+
+
     }
 
+    IEnumerator RoundOneWorking()
+    {
+        
 
+        while (stillGoing)
+        {
+            for(int i = 0; i < spawnLimit; i++)
+            {
+                Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
+                Debug.Log("Should've spawned a bomber");
+                
+
+                Instantiate(Fighters, FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position, Quaternion.identity);
+
+                Debug.Log("Should've spawned a fighter");
+                yield return new WaitForSeconds(5);
+            }
+            
+          yield return null;
+
+        }
+
+        Debug.Log("This shouldn't run");
+       
+    }
 
     public void RoundSpawn()
     {
@@ -159,14 +188,18 @@ public class roundManager : MonoBehaviour
         //}
     }
 
-    IEnumerator SpawnedTwo()
+    IEnumerator SpawnedTwo(int seconds)
     {
-        yield return new WaitForSeconds(5);
+        Debug.Log("Spawned two, now waiting");
+        yield return new WaitForSeconds(seconds);
     }
 
     public void ChangeRound()
     {
-        
+        if (isLastRound)
+        {
+            Debug.Log("Victory Screen condition");
+        }
         //GM.instance.Changestage Function.
 
 
@@ -176,10 +209,12 @@ public class roundManager : MonoBehaviour
     {
         if(EnemyType == true)
         {
+            Debug.Log("Fighter was killed");
             FighterNum -= 1;
         }
         else if(EnemyType == false)
         {
+            Debug.Log("Bomber was killed");
             BomberNum -= 1;
         }
     }

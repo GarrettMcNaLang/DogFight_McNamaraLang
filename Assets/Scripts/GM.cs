@@ -5,38 +5,6 @@ using UnityEngine;
 public class GM : MonoBehaviour
 {
 
-    private int _MaxEnemiesOnScreen = 4;
-
-    public int maxEnemiesOnScreen {
-
-        get { return _MaxEnemiesOnScreen; }
-
-        set { _MaxEnemiesOnScreen = value;
-
-        }
-        }
-
-    private int _playerHP = 3;
-
-    public int PlayerHP
-    {
-        get { return _playerHP; }
-
-        set
-        {
-            _playerHP = value;
-
-            Debug.LogFormat("Player HP = {0}", _playerHP);
-
-            if (_playerHP <= 0)
-
-                Debug.Log("Install Player Death");
-
-            Destroy(gameObject);
-        }
-    }
-
-
 
     //singleton format
     public static GM instance;
@@ -51,7 +19,44 @@ public class GM : MonoBehaviour
         reference = GameObject.Find("CombatObj").GetComponent<CombatManager>();
 
         Debug.Log("Game Manager reporting for duty");
+
+        BomberPool = GameObject.Find("BomberPool").GetComponent<ObjectPoolScript>();
+
+        FighterPool = GameObject.Find("FighterPool").GetComponent<ObjectPoolScript>();
+
+        ProjectilePool = GameObject.Find("ProjectilePool").GetComponent<ObjectPoolScript>();
+
+        PlayerPool = GameObject.Find("PlayerPool").GetComponent<ObjectPoolScript>();
     }
+
+
+    private int _MaxEnemiesOnScreen = 4;
+
+    public int maxEnemiesOnScreen
+    {
+
+        get { return _MaxEnemiesOnScreen; }
+
+        set
+        {
+            _MaxEnemiesOnScreen = value;
+
+        }
+    }
+
+    [SerializeField]
+    private ObjectPoolScript BomberPool;
+
+    [SerializeField]
+    private ObjectPoolScript FighterPool;
+
+    [SerializeField]
+    private ObjectPoolScript ProjectilePool;
+
+    [SerializeField]
+    private ObjectPoolScript PlayerPool;
+
+
 
     private void OnEnable()
     {
@@ -92,6 +97,33 @@ public class GM : MonoBehaviour
     {
         if (Enemykilledevent != null) 
             Enemykilledevent(notification);
+    }
+
+    public delegate void PlayerHealthTransmit(int PHealth);
+
+    public event PlayerHealthTransmit Playerhealthtransmit;
+
+    public void ChangePlayerHealth(int PlayerHealth)
+    {
+        Playerhealthtransmit(PlayerHealth);
+    }
+
+    public delegate void BomberTransmit(int Bombers);
+
+    public event BomberTransmit Bombertransmit;
+
+    public void ChangeBomberCount(int BomberCount)
+    {
+        Bombertransmit(BomberCount);
+    }
+
+    public delegate void FighterTransmit(int Fighters);
+
+    public event FighterTransmit Fightertransmit;
+
+    public void ChangeFighterCount(int Fighters)
+    {
+        Fightertransmit(Fighters);
     }
 
     public delegate void SetUpRound();
