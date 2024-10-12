@@ -1003,7 +1003,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235075165}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -35.488907, y: 0.59184533, z: 0.403657}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1498,6 +1498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projPrefab: {fileID: 4897642376389116440, guid: 18c9a7a985464c34e94aea3012fddb36, type: 3}
+  ProjectilePool: {fileID: 458948511}
 --- !u!4 &516349186
 Transform:
   m_ObjectHideFlags: 0
@@ -2880,6 +2881,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc84f24ad0e9b744380f9d19529f073e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BomberPool: {fileID: 0}
+  FighterPool: {fileID: 0}
+  ProjectilePool: {fileID: 0}
+  PlayerPool: {fileID: 0}
 --- !u!4 &906681435
 Transform:
   m_ObjectHideFlags: 0
@@ -7165,7 +7170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5fc6d707ef4f534193f159abbb0f244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 5109137884301950735, guid: c454ded1bd18e6c45b59b82ff24f8288, type: 3}
+  playerPool: {fileID: 1098098713}
+  FighterPool: {fileID: 806597586}
+  BomberPool: {fileID: 235075166}
   PlayerSpawn: {fileID: 2018485845}
   spawnLimit: 0
   Bombers: {fileID: 102371621798482274, guid: 25d7b036eeba60547b03888edc20c996, type: 3}
@@ -7479,7 +7486,7 @@ SceneRoots:
   - {fileID: 906681435}
   - {fileID: 516349186}
   - {fileID: 2120685699}
-  - {fileID: 235075167}
   - {fileID: 1098098714}
   - {fileID: 458948512}
   - {fileID: 806597587}
+  - {fileID: 235075167}

@@ -120,16 +120,6 @@ public class FighterScript : EnemyBehavior
             goToMiddle  = true;
         }
 
-
-        
-        //calculates the distance between the Enemy and the middle destination
-       
-        // Debug.Log(Distance);
-
-       
-
-            
-
     }
 
     public bool CheckDistance()
@@ -188,7 +178,13 @@ public class FighterScript : EnemyBehavior
 
     }
 
-   
+   public void OnRetrieve(Vector2 EnemySpawn)
+    {
+        eRB.position = EnemySpawn;
+        Setup();
+    }
+
+
 
     //EnemyMove
 

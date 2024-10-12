@@ -28,4 +28,9 @@ public class BomberScript : EnemyBehavior
         Debug.Log("Enemy killed, call event to decrease Bomber count");
     }
 
+    public void OnRetrieve(Vector2 enemyspawn)
+    {
+        eRB.position = enemyspawn;
+        
+    }
 }

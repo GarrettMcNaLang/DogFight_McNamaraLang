@@ -6,12 +6,15 @@ public class CombatManager : MonoBehaviour
 {
     public GameObject projPrefab;
 
-
+    [SerializeField]
+    private ObjectPoolScript ProjectilePool;
 
     Vector2 PlayerFirePos;
     void Awake()
     {
         Debug.Log("Combat Manager Reporting for duty");
+
+       
     }
 
     void OnEnable()
@@ -48,7 +51,7 @@ public class CombatManager : MonoBehaviour
                     Debug.Log("Creating player Projectile");
                     //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
 
-                    
+                    prefabInstance = ProjectilePool.GetObject();
 
                     StartCoroutine(WaitTwoSecond());
                         //Debug.Log("Creating player Projectile");
@@ -65,14 +68,14 @@ public class CombatManager : MonoBehaviour
             case false:
                 {
                     Debug.Log("Creating enemy projectile");
-                    prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
+                    prefabInstance = ProjectilePool.GetObject();   
                   
                    
-                        Debug.Log("Creating enemy projectile");
-                      //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
-                      
-                       
-                      
+                    
+                    //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.down, Quaternion.identity);
+
+                    StartCoroutine(WaitTwoSecond());
+
 
 
                     break;
@@ -84,7 +87,7 @@ public class CombatManager : MonoBehaviour
         ProjReference = prefabInstance.GetComponent<ProjectileScript>();
 
 
-        ProjReference.OnInstantiate(whoFired);
+        ProjReference.OnRetrieve(whoFired, shooterTransform);
     }
     IEnumerator WaitTwoSecond()
     {

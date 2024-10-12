@@ -13,20 +13,13 @@ public class GM : MonoBehaviour
     void Awake()
     {
         instance = this;
-        
+
         DontDestroyOnLoad(gameObject);
 
         reference = GameObject.Find("CombatObj").GetComponent<CombatManager>();
 
         Debug.Log("Game Manager reporting for duty");
 
-        BomberPool = GameObject.Find("BomberPool").GetComponent<ObjectPoolScript>();
-
-        FighterPool = GameObject.Find("FighterPool").GetComponent<ObjectPoolScript>();
-
-        ProjectilePool = GameObject.Find("ProjectilePool").GetComponent<ObjectPoolScript>();
-
-        PlayerPool = GameObject.Find("PlayerPool").GetComponent<ObjectPoolScript>();
     }
 
 
@@ -60,8 +53,8 @@ public class GM : MonoBehaviour
 
     private void OnEnable()
     {
-        SpawnProjectile += reference.CreateProjectile;
-       
+
+        GM.instance.SpawnProjectile += reference.CreateProjectile;
     }
 
     //will spawn projectiles

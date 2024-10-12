@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class roundManager : MonoBehaviour
 {
-    public GameObject PlayerPrefab;
+
+    [SerializeField]
+    private ObjectPoolScript playerPool;
+
+    [SerializeField]
+    private ObjectPoolScript FighterPool;
+
+    [SerializeField]
+    private ObjectPoolScript BomberPool;
+
+    //public GameObject PlayerPrefab;
 
    public GameObject PlayerSpawn;
 
@@ -77,7 +87,7 @@ public class roundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnPlayer();
+       
     }
 
     // Update is called once per frame
@@ -88,6 +98,7 @@ public class roundManager : MonoBehaviour
             case RoundNumber.One:
                 {
                     Debug.Log("Round 1 activated");
+                    
                     spawnLimit = 2;
                     break;
                 }
@@ -108,11 +119,16 @@ public class roundManager : MonoBehaviour
    
     public void SpawnPlayer()
     {
-        Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
+        var PlayerInstance = playerPool.GetObject();
+
+        PlayerController GetScript = PlayerInstance.GetComponent<PlayerController>();
+
+        GetScript.OnRetrieve(PlayerSpawn);
     }
 
     public void RoundOne()
     {
+        SpawnPlayer();
 
         Debug.Log("In Round 1 program");
 
@@ -137,11 +153,18 @@ public class roundManager : MonoBehaviour
         {
             for(int i = 0; i < spawnLimit; i++)
             {
-                Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
-                Debug.Log("Should've spawned a bomber");
-                
+                var Bomber = BomberPool.GetObject();
+                BomberScript BomberInstance = Bomber.GetComponent<BomberScript>();
+                BomberInstance.OnRetrieve(BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position);
 
-                Instantiate(Fighters, FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position, Quaternion.identity);
+               // Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
+                Debug.Log("Should've spawned a bomber");
+
+                var Fighter = FighterPool.GetObject();
+                FighterScript FighterInstance = Fighter.GetComponent<FighterScript>();
+                FighterInstance.OnRetrieve(FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position);
+
+                //Instantiate(Fighters, FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position, Quaternion.identity);
 
                 Debug.Log("Should've spawned a fighter");
                 yield return new WaitForSeconds(5);

@@ -31,7 +31,7 @@ public abstract class EnemyBehavior : MonoBehaviour
             if (_EnemyLives <= 0)
             {
                 Debug.Log("Initiate Enemy Death");
-                Destroy(gameObject);
+                gameObject.ReturnToPool();
                 
             }
                 
@@ -110,7 +110,7 @@ public abstract class EnemyBehavior : MonoBehaviour
         {
             //StartCoroutine(WaitThenKill());
 
-            Destroy(gameObject);
+            gameObject.ReturnToPool();
 
             Debug.Log("Object destroyed");
         }

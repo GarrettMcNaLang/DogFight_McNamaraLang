@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogFormat("Player HP = {0}", _playerHP);
 
             if (_playerHP <= 0)
-                Destroy(gameObject);
+              gameObject.ReturnToPool();
             Debug.Log("Install Player Death");
 
            
@@ -95,6 +95,11 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + (speed * Time.deltaTime * CardinalMovement));
 
         
+    }
+
+    public void OnRetrieve(GameObject PlayerSpawn)
+    {
+        rb.position = PlayerSpawn.transform.position;
     }
 
     public void AttackEvent()
