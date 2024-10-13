@@ -7,6 +7,7 @@ public class BomberScript : EnemyBehavior
     //Vector for moving
     Vector2 bomberMove = Vector2.down;
 
+  
 
     public override void Setup()
     {
@@ -33,4 +34,6 @@ public class BomberScript : EnemyBehavior
         eRB.position = enemyspawn;
         
     }
+
+  
 }

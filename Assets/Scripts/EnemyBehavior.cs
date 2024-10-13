@@ -5,6 +5,8 @@ using UnityEngine;
 //abstract and override
 public abstract class EnemyBehavior : MonoBehaviour
 {
+
+    protected GameObject GoHereOnReturn;
     //collider and rigibody
     [HideInInspector]
     protected Collider2D eCollider;
@@ -31,6 +33,7 @@ public abstract class EnemyBehavior : MonoBehaviour
             if (_EnemyLives <= 0)
             {
                 Debug.Log("Initiate Enemy Death");
+                OnReturn();
                 gameObject.ReturnToPool();
                 
             }
@@ -49,8 +52,9 @@ public abstract class EnemyBehavior : MonoBehaviour
         //if (eRB == null)
         //    Debug.Log("Awake function isn't making inheriters access rigidbodies");
 
-
+        GoHereOnReturn = GameObject.Find("GoHerewhenReturning");
         Setup();
+
 
     }
    
@@ -119,16 +123,10 @@ public abstract class EnemyBehavior : MonoBehaviour
 
     }
 
-    IEnumerator WaitThenKill()
+  
+    public void OnReturn()
     {
-        if (isVisible)
-        yield break;
-        else if(!isVisible)
-        {
-            yield return new WaitForSeconds(3);
-           
-        }
-       
+        eRB.position = GoHereOnReturn.transform.position;
     }
     //Onhit
     //EnemyMove

@@ -21,8 +21,12 @@ public class PlayerController : MonoBehaviour
             Debug.LogFormat("Player HP = {0}", _playerHP);
 
             if (_playerHP <= 0)
-              gameObject.ReturnToPool();
-            Debug.Log("Install Player Death");
+            {
+                OnReturn();
+                gameObject.ReturnToPool();
+                Debug.Log("Install Player Death");
+            }
+               
 
            
         }
@@ -48,6 +52,8 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
 
     Camera gamePlayCamera;
+
+    Vector2 spawnPoint;
 
     void Awake()
     {
@@ -100,6 +106,13 @@ public class PlayerController : MonoBehaviour
     public void OnRetrieve(GameObject PlayerSpawn)
     {
         rb.position = PlayerSpawn.transform.position;
+        
+        spawnPoint = PlayerSpawn.transform.position;
+    }
+
+    public void OnReturn()
+    {
+        rb.position = spawnPoint;
     }
 
     public void AttackEvent()

@@ -136,12 +136,13 @@ public class ProjectileScript : MonoBehaviour
         if (collision.transform.TryGetComponent<PlayerController>(out PlayerController player))
         {
             //OnReturn();
-            gameObject.ReturnToPool();
+            DeleteProjectile();
         }
         else if (collision.transform.TryGetComponent<EnemyBehavior>(out EnemyBehavior enemy))
         {
-           // OnReturn();
-            gameObject.ReturnToPool();
+            // OnReturn();
+
+            DeleteProjectile();
         }
     }
     //OnInstantiate/ Constructor
