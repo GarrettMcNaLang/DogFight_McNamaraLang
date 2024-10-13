@@ -30,6 +30,7 @@ public abstract class EnemyBehavior : MonoBehaviour
         {
             _EnemyLives = value;
 
+           
             if (_EnemyLives <= 0)
             {
                 Debug.Log("Initiate Enemy Death");

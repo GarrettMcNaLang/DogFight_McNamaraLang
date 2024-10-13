@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    public static event Action playerDeath;
+    
 
     GameObject MainMenu;
 
@@ -32,6 +33,8 @@ public class MenuManager : MonoBehaviour
     roundManager RMreference;
 
     GameObject PlayerRef;
+
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +78,8 @@ public class MenuManager : MonoBehaviour
 
         GM.instance.Bombertransmit += ChangeBomberCount;
 
+        GM.instance.Changestage += ChangeRoundNum;
+
         if (MainMenu == null)
             Debug.Log("MainMenuEmpty");
 
@@ -87,23 +92,21 @@ public class MenuManager : MonoBehaviour
         MainMenu.SetActive(true);
     }
 
-    private void Change(int Bombers)
-    {
-        throw new System.NotImplementedException();
-    }
-
+   
     public void StartGame()
     {
+        
+
         GM.instance.StartRoundManager();
 
         ActivatePanel(MainUI);
         DeactivatePanel(MainMenu);
 
-
-       // ChangeUI();
+        Time.timeScale = 1.0f;
+        // ChangeUI();
 
         Debug.Log("has left function");
-        Time.timeScale = 1.0f;
+        
     }
 
     public void ChangeHealth(int NewHealth)
@@ -123,35 +126,34 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public void ChangeUI()
+    public void ChangeRoundNum(int newRoundNum)
     {
+        var StageText = Stage.transform.Find("Stage Insert").GetComponent<TextMeshProUGUI>();
+
+
+        Stage.SetActive(true);
+
+
+        StageText.text = "Stage " + newRoundNum;
+
        
 
-        //PlayerRef = GameObject.Find("Player");
+        StartCoroutine(WaitAndCheck());
 
-        //if (PlayerRef.TryGetComponent<PlayerController>(out PlayerController playerRef))
-        //{
-
-        //    playerLives.text = "Lives: " + PlayerRef.GetComponent<PlayerController>().PlayerHP;
-        //}
-        //else
-        //{
-        //    StartCoroutine(WaitAndCheck());
-
-        //    playerLives.text = "Lives: " + PlayerRef.GetComponent<PlayerController>().PlayerHP;
-        //}
-            
-
-
-        //Debug.Log(PlayerRef.GetComponent<PlayerController>().PlayerHP);
+        
     }
+
+
+
 
     IEnumerator WaitAndCheck()
     {
+        Debug.Log("Will Waait then start game");
         //counting to until avaialabe
         yield return new WaitForSeconds(5);
-       
 
+        Stage.SetActive(false);
+       
 
     }
 

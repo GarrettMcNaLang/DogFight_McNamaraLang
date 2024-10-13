@@ -17,11 +17,12 @@ public class PlayerController : MonoBehaviour
         {
             _playerHP = value;
 
-
+            GM.instance.ChangePlayerHealth(PlayerHP);
             Debug.LogFormat("Player HP = {0}", _playerHP);
 
             if (_playerHP <= 0)
             {
+                GM.instance.ChangePlayerHealth(0);
                 OnReturn();
                 gameObject.ReturnToPool();
                 Debug.Log("Install Player Death");
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GM.instance.ChangePlayerHealth(PlayerHP);
     }
 
     // Update is called once per frame

@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GM : MonoBehaviour
 {
-
+    //public static event Action ChangeRoundNumber = delegate { };
 
     //singleton format
     public static GM instance;
@@ -19,6 +20,7 @@ public class GM : MonoBehaviour
         reference = GameObject.Find("CombatObj").GetComponent<CombatManager>();
 
         Debug.Log("Game Manager reporting for duty");
+
 
     }
 
@@ -81,6 +83,14 @@ public class GM : MonoBehaviour
         initiateRoundManager();
     }
 
+    public delegate void ChangeStage(int RoundNum);
+
+    public event ChangeStage Changestage;
+
+    public void SetRoundUI(int RoundNum)
+    {
+        Changestage(RoundNum);
+    }
    
     public delegate void EnemyKilledEvent(bool diditHappen);
 

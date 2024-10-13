@@ -26,8 +26,11 @@ public class roundManager : MonoBehaviour
 
         set { _BomberNum = value;
 
-            GM.instance.ChangeBomberCount(_BomberNum);
+          GM.instance.ChangeBomberCount(BomberNum);
             Debug.Log(_BomberNum);
+
+            if (BomberNum <= 0)
+                GM.instance.ChangeBomberCount(0);
         }
     }
 
@@ -39,8 +42,11 @@ public class roundManager : MonoBehaviour
 
         set { _FighterNum = value;
 
-            GM.instance.ChangeFighterCount(_FighterNum);
+            GM.instance.ChangeFighterCount(FighterNum);
             Debug.Log(_FighterNum);
+
+            if (FighterNum <= 0)
+                GM.instance.ChangeFighterCount(0);
         }
     }
 
@@ -61,9 +67,11 @@ public class roundManager : MonoBehaviour
     RoundNumber CurrRound;
 
     bool stillGoing;
+
+    int RoundNum;
     void Awake()
     {
-        GM.instance.initiateRoundManager += RoundOne;
+        GM.instance.initiateRoundManager += ChooseRound;
 
         GM.instance.Enemykilledevent += EnemyWasKilled;
 
@@ -80,6 +88,10 @@ public class roundManager : MonoBehaviour
            Debug.Log("Fighter Spawns found");
         CurrRound = RoundNumber.One;
 
+
+        GM.instance.ChangeFighterCount(FighterNum);
+
+        GM.instance.ChangeBomberCount(BomberNum);
        
     }
 
@@ -93,17 +105,7 @@ public class roundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(CurrRound)
-        {
-            case RoundNumber.One:
-                {
-                    Debug.Log("Round 1 activated");
-                    
-                    spawnLimit = 2;
-                    break;
-                }
-            
-        }
+       
 
         if(BomberNum > 0 && FighterNum > 0)
         {
@@ -116,22 +118,47 @@ public class roundManager : MonoBehaviour
         }
     }
 
+
+    public void ChooseRound()
+    {
+        switch (CurrRound)
+        {
+            case RoundNumber.One:
+                {
+                    Debug.Log("Round 1 activated");
+                    RoundNum = 1;
+                    spawnLimit = 2;
+
+                    RoundOne();
+                    break;
+                }
+
+        }
+    }
    
     public void SpawnPlayer()
     {
+        Debug.Log("Spawning player");
+
         var PlayerInstance = playerPool.GetObject();
 
         PlayerController GetScript = PlayerInstance.GetComponent<PlayerController>();
 
         GetScript.OnRetrieve(PlayerSpawn);
+
     }
 
     public void RoundOne()
     {
+        StartCoroutine(SetRoundNum(1));
+
+        
+
         SpawnPlayer();
 
         Debug.Log("In Round 1 program");
 
+       
         StartCoroutine(RoundOneWorking());
 
         // RoundSpawn();
@@ -145,9 +172,20 @@ public class roundManager : MonoBehaviour
 
     }
 
+    IEnumerator SetRoundNum(int RoundNum)
+    {
+        Debug.Log("Changing Round Number");
+
+        GM.instance.SetRoundUI(RoundNum);
+
+        yield return new WaitForSeconds(5);
+    }
+
     IEnumerator RoundOneWorking()
     {
-        
+        yield return new WaitForSeconds(5);
+
+        Debug.Log("Code has reached Round 1");
 
         while (stillGoing)
         {
