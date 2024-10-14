@@ -54,7 +54,7 @@ public abstract class EnemyBehavior : MonoBehaviour
         //    Debug.Log("Awake function isn't making inheriters access rigidbodies");
 
         GoHereOnReturn = GameObject.Find("GoHerewhenReturning");
-        Setup();
+        InitialSetup();
 
 
     }
@@ -62,7 +62,7 @@ public abstract class EnemyBehavior : MonoBehaviour
     //kills the enemy on collision
     public abstract void KillEntity();
 
-    public abstract void Setup();
+    public abstract void InitialSetup();
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {

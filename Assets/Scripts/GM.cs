@@ -56,7 +56,12 @@ public class GM : MonoBehaviour
     private void OnEnable()
     {
 
-        GM.instance.SpawnProjectile += reference.CreateProjectile;
+        SpawnProjectile += reference.CreateProjectile;
+    }
+
+    private void OnDisable()
+    {
+        SpawnProjectile -= reference.CreateProjectile;
     }
 
     //will spawn projectiles

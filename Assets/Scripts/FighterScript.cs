@@ -64,9 +64,11 @@ public class FighterScript : EnemyBehavior
     }
 
     
+    
 
-    public override void Setup()
+    public override void InitialSetup()
     {
+        Debug.Log("Setup should be running");
         //retrieves all ends for the array
         Destinations = GameObject.FindGameObjectsWithTag("EMoveTowards");
 
@@ -102,6 +104,21 @@ public class FighterScript : EnemyBehavior
         //direction from enemy position to middle destination
         Direction = (constantDestinationVector - EnemyPosition).normalized;
     }
+
+    //public void NewSetup()
+    //{
+    //    endPosition = Destinations[UnityEngine.Random.Range(0, Destinations.Length)];
+
+    //    ConstPosition = ConstantDestination[UnityEngine.Random.Range(0, ConstantDestination.Length)];
+
+    //    endPositionVector = endPosition.transform.position;
+
+    //    //position of ConstantDestination object
+    //    constantDestinationVector = ConstPosition.transform.position;
+
+    //    //direction from enemy position to middle destination
+    //    Direction = (constantDestinationVector - EnemyPosition).normalized;
+    //}
     // Update is called once per frame
     void Update()
     {
@@ -129,7 +146,6 @@ public class FighterScript : EnemyBehavior
         if (Distance > 1f)
             return true;
         else
-        
         return true;
     }
 
@@ -181,7 +197,9 @@ public class FighterScript : EnemyBehavior
    public void OnRetrieve(Vector2 EnemySpawn)
     {
         eRB.position = EnemySpawn;
-        Setup();
+
+        InitialSetup();
+       // NewSetup();
     }
 
 

@@ -55,6 +55,28 @@ public class MenuManager : MonoBehaviour
        
     }
 
+    private void OnEnable()
+    {
+        GM.instance.Playerhealthtransmit += ChangeHealth;
+
+        GM.instance.Fightertransmit += ChangeFighterCount;
+
+        GM.instance.Bombertransmit += ChangeBomberCount;
+
+        GM.instance.Changestage += ChangeRoundNum;
+    }
+
+    private void OnDisable()
+    {
+        GM.instance.Playerhealthtransmit -= ChangeHealth;
+
+        GM.instance.Fightertransmit -= ChangeFighterCount;
+
+        GM.instance.Bombertransmit -= ChangeBomberCount;
+
+        GM.instance.Changestage -= ChangeRoundNum;
+    }
+
     private void Awake()
     {
 
@@ -72,13 +94,7 @@ public class MenuManager : MonoBehaviour
 
         instructions = CanvasRef.transform.Find("Instructions").gameObject;
 
-        GM.instance.Playerhealthtransmit += ChangeHealth;
-
-        GM.instance.Fightertransmit += ChangeFighterCount;
-
-        GM.instance.Bombertransmit += ChangeBomberCount;
-
-        GM.instance.Changestage += ChangeRoundNum;
+      
 
         if (MainMenu == null)
             Debug.Log("MainMenuEmpty");

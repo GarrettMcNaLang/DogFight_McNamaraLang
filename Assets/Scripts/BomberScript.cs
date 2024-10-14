@@ -9,7 +9,7 @@ public class BomberScript : EnemyBehavior
 
   
 
-    public override void Setup()
+    public override void InitialSetup()
     {
        
     }

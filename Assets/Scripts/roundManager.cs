@@ -69,11 +69,23 @@ public class roundManager : MonoBehaviour
     bool stillGoing;
 
     int RoundNum;
-    void Awake()
+
+    private void OnEnable()
     {
         GM.instance.initiateRoundManager += ChooseRound;
 
         GM.instance.Enemykilledevent += EnemyWasKilled;
+    }
+
+    private void OnDisable()
+    {
+        GM.instance.initiateRoundManager -= ChooseRound;
+
+        GM.instance.Enemykilledevent -= EnemyWasKilled;
+    }
+    void Awake()
+    {
+     
 
         BombersSpawn = GameObject.FindGameObjectsWithTag("TopOfScreen");
 
@@ -107,7 +119,7 @@ public class roundManager : MonoBehaviour
     {
        
 
-        if(BomberNum > 0 && FighterNum > 0)
+        if(BomberNum > 0 || FighterNum > 0)
         {
             stillGoing = true;
             
@@ -249,11 +261,7 @@ public class roundManager : MonoBehaviour
         //}
     }
 
-    IEnumerator SpawnedTwo(int seconds)
-    {
-        Debug.Log("Spawned two, now waiting");
-        yield return new WaitForSeconds(seconds);
-    }
+  
 
     public void ChangeRound()
     {
