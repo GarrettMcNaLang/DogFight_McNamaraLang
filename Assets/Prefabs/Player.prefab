@@ -197,6 +197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7048835824133423556}
+  - component: {fileID: 2262954506280438770}
   m_Layer: 8
   m_Name: PlayerProjSpawn
   m_TagString: Untagged
@@ -219,3 +220,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4383797554662575039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2262954506280438770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742795719143203919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0cb54775a259c4eacf5f3e9bf010da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

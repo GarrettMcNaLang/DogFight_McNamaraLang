@@ -9,10 +9,12 @@ using UnityEngine;
 
 public class FighterScript : EnemyBehavior
 {
+
+    
     //will spawn at a random location
     //will move towards a specific point offscreen
     //will shoot three projectiles at the player's last known location
-
+    
     //3 points past the bottom of the screen that will be chosen randomly for the enemy to move to 
     private GameObject[] Destinations;
     //the upper middle of the screen
