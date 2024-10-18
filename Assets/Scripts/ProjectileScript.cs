@@ -12,7 +12,7 @@ public abstract class ProjectileScript : MonoBehaviour
     protected float projSpeed;
 
     //rigidbody of the projectile
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     //decides how long an object lasts until death
     protected float timeUntilDeath;
