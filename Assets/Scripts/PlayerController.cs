@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour
 {
+    private ObjectPoolScript ProjPool;
 
     private int _playerHP = 3;
 
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
             if (_playerHP <= 0)
             {
                 GM.instance.ChangePlayerHealth(0);
-                OnReturn();
+                
                 gameObject.ReturnToPool();
                 Debug.Log("Install Player Death");
             }
@@ -49,12 +50,9 @@ public class PlayerController : MonoBehaviour
     //playerHP (Get and Set)
 
     
-    //Projectile prefab
-    public GameObject projectilePrefab;
-
+   
     Camera gamePlayCamera;
 
-    Vector2 spawnPoint;
 
     void Awake()
     {
@@ -66,7 +64,9 @@ public class PlayerController : MonoBehaviour
 
         gamePlayCamera = GameObject.Find("GameplayCamera").GetComponent<Camera>();
 
-       // StayInLimits();
+        ProjPool = gameObject.GetComponentInChildren<ObjectPoolScript>();
+
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -104,36 +104,14 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public void OnRetrieve(GameObject PlayerSpawn)
-    {
-        rb.position = PlayerSpawn.transform.position;
-        
-        spawnPoint = PlayerSpawn.transform.position;
-    }
-
-    public void OnReturn()
-    {
-        rb.position = spawnPoint;
-    }
-
+ 
+ 
     public void AttackEvent()
     {
         Debug.Log("Player Has Fired");
 
-        Vector2 position = this.transform.position;
+        ProjPool.GetObject();
 
-        GM.instance.CallSpawnProjectile(true, position);
-
-        //if(Mouse1)
-        //AttackEvent
-
-        //1.InstantiateProjectile
-        //2.bool: PlayerFired = true
-        //2.send it in "forward" (player position and upward) direction
-        //bool: if timer is complete repeat steps 1 and 2
-
-
-        //send call to event in projectile script
     }
 
 

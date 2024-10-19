@@ -9,7 +9,10 @@ using UnityEngine;
 
 public class FighterScript : EnemyBehavior
 {
+    bool isVisible;
+    bool isDisabled;
 
+    private ObjectPoolScript NosePool;
     
     //will spawn at a random location
     //will move towards a specific point offscreen
@@ -20,8 +23,7 @@ public class FighterScript : EnemyBehavior
     //the upper middle of the screen
     private GameObject[] ConstantDestination;
     
-    //reference used for collisions
-    public GameObject Player;
+    
 
     //a randomly selected gameObject from the Destinations array
     GameObject endPosition;
@@ -40,11 +42,9 @@ public class FighterScript : EnemyBehavior
     //location of the randomly selected endposition position
     Vector2 endPositionVector;
 
-    public GameObject Projectile;
-
     bool goToMiddle = false;
 
-    bool middle;
+  
     bool reachedMiddle
     {
         get
@@ -66,103 +66,84 @@ public class FighterScript : EnemyBehavior
     }
 
     
-    
+   
 
-    public override void InitialSetup()
+    void OnEnable()
     {
-        Debug.Log("Setup should be running");
-        //retrieves all ends for the array
-        Destinations = GameObject.FindGameObjectsWithTag("EMoveTowards");
+        isDisabled = false;
 
-        //checks if it's full
-        if (Destinations != null)
-            Debug.LogFormat("Array filled, full of {0} elements", Destinations.Length);
-        
-        //gets the constantDestination position gameObject
-        ConstantDestination = GameObject.FindGameObjectsWithTag("ConstantLocation");
-
-        if (ConstantDestination != null)
-            Debug.LogFormat("Array filled, full of {0} elements", ConstantDestination.Length);
-        //randomly selects a gameobject from the array
-        endPosition = Destinations[UnityEngine.Random.Range(0, Destinations.Length)];
-
-        ConstPosition = ConstantDestination[UnityEngine.Random.Range(0, ConstantDestination.Length)];
-        //retrieves player object
-        Player = GameObject.Find("Player");
-
-        //checks if it's full
-        if (Player != null)
-            Debug.Log("Player object is full");
-
-        //gets the inital position for the rigibody, used for distance and movement calculations
-
-        EnemyPosition = eRB.position;
-        //position of randomly selected end position
-        endPositionVector = endPosition.transform.position;
-
-        //position of ConstantDestination object
-        constantDestinationVector = ConstPosition.transform.position;
-
-        //direction from enemy position to middle destination
-        Direction = (constantDestinationVector - EnemyPosition).normalized;
-    }
-
-    //public void NewSetup()
-    //{
-    //    endPosition = Destinations[UnityEngine.Random.Range(0, Destinations.Length)];
-
-    //    ConstPosition = ConstantDestination[UnityEngine.Random.Range(0, ConstantDestination.Length)];
-
-    //    endPositionVector = endPosition.transform.position;
-
-    //    //position of ConstantDestination object
-    //    constantDestinationVector = ConstPosition.transform.position;
-
-    //    //direction from enemy position to middle destination
-    //    Direction = (constantDestinationVector - EnemyPosition).normalized;
-    //}
-    // Update is called once per frame
-    void Update()
-    {
-        EnemyPosition = eRB.position;
-
-        if (!goToMiddle && Vector2.Distance(EnemyPosition, constantDestinationVector) < 1f)
+        if (!isDisabled)
         {
-            Direction = (endPositionVector - EnemyPosition).normalized;
+            NosePool = gameObject.GetComponentInChildren<ObjectPoolScript>();
 
-            
-            Physics.SyncTransforms();
+            Destinations = GameObject.FindGameObjectsWithTag("EMoveTowards");
 
-            Debug.Log("Changing Direction");
+            ConstantDestination = GameObject.FindGameObjectsWithTag("ConstantLocation");
 
-            AttackEvent();
-            goToMiddle  = true;
+            Debug.Log("IsEnabled");
+            // NewMidpointandEndpoint();
+            endPosition = Destinations[UnityEngine.Random.Range(0, Destinations.Length)];
+
+            ConstPosition = ConstantDestination[UnityEngine.Random.Range(0, ConstantDestination.Length)];
+            //gets the inital position for the rigibody, used for distance and movement calculations
+
+            EnemyPosition = eRB.position;
+            //position of randomly selected end position
+            endPositionVector = endPosition.transform.position;
+
+            //position of ConstantDestination object
+            constantDestinationVector = ConstPosition.transform.position;
+
+            //direction from enemy position to middle destination
+            Direction = (constantDestinationVector - EnemyPosition).normalized;
         }
 
+      
     }
 
-    public bool CheckDistance()
+    void OnDisable()
     {
-       var Distance = Vector2.Distance(EnemyPosition, constantDestinationVector);
-
-        if (Distance > 1f)
-            return true;
-        else
-        return true;
+        isDisabled = true;
     }
 
+    public void NewMidpointandEndpoint()
+    {
+        Debug.Log("In Midpoint and Endpoint generator");
+       
+    }
+
+
+
+    void Update()
+    {
+        if (!isDisabled)
+        {
+            EnemyPosition = eRB.position;
+
+            if (!goToMiddle && Vector2.Distance(EnemyPosition, constantDestinationVector) < 1f)
+            {
+                Direction = (endPositionVector - EnemyPosition).normalized;
+
+
+                Physics.SyncTransforms();
+
+                Debug.Log("Changing Direction");
+
+                AttackEvent();
+                goToMiddle = true;
+            }
+        }
+       
+
+    }
+
+  
     void FixedUpdate()
     {
-        //cast raycast toward player location
-
         
-
-
-        eRB.MovePosition(eRB.position + (speed * Time.deltaTime * Direction));
-
-        //eRB.MovePosition(eRB.position + (speed * Time.deltaTime * FighterMove));
-
-        
+        if(!isDisabled){
+            eRB.MovePosition(eRB.position + (speed * Time.deltaTime * Direction));
+        }
 
     }
 
@@ -171,17 +152,11 @@ public class FighterScript : EnemyBehavior
     public void AttackEvent()
     {
 
-        
-        Vector2 position = this.transform.position;
+        //GM.instance.SpawnProjectile(false, position);
 
+        NosePool.GetObject();
 
-            //GM.instance.SpawnProjectile(false, position);
-
-            GM.instance.CallSpawnProjectile(false, position);
-      
-
-       
-        
+            //GM.instance.CallSpawnProjectile(false, position);
 
     }
   
@@ -196,21 +171,29 @@ public class FighterScript : EnemyBehavior
 
     }
 
-   public void OnRetrieve(Vector2 EnemySpawn)
-    {
-        eRB.position = EnemySpawn;
 
-        InitialSetup();
-       // NewSetup();
+    void OnBecameVisible()
+    {
+        isVisible = true;
+
+
     }
 
+    void OnBecameInvisible()
+    {
+        isVisible = false;
 
 
-    //EnemyMove
+        if (!isVisible)
+        {
+            //StartCoroutine(WaitThenKill());
 
-    //OnHit
+            gameObject.ReturnToPool();
 
-    //ShootEvent
+            Debug.Log("Object destroyed");
+        }
 
 
+
+    }
 }

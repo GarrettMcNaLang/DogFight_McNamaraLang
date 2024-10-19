@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0763e65c9f12142bb6c6242e85fb76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjPool: {fileID: 0}
   speed: 8
   projectilePrefab: {fileID: 6555888921824220439, guid: 18c9a7a985464c34e94aea3012fddb36, type: 3}
 --- !u!1 &6742795719143203919
@@ -197,7 +198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7048835824133423556}
-  - component: {fileID: 2262954506280438770}
+  - component: {fileID: 7182039483992301962}
   m_Layer: 8
   m_Name: PlayerProjSpawn
   m_TagString: Untagged
@@ -220,7 +221,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4383797554662575039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2262954506280438770
+--- !u!114 &7182039483992301962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,6 +230,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6742795719143203919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0cb54775a259c4eacf5f3e9bf010da, type: 3}
+  m_Script: {fileID: 11500000, guid: 21cb734ed46b47c46a7da2ce867d1869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 6224478875212298646, guid: 353f7f53e6937914f9366cd40cbd0990, type: 3}

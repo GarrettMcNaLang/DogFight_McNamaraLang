@@ -51,7 +51,7 @@ public class ObjectPoolScript : MonoBehaviour
         else
         {
             //if there are no objects in the pool, create a new object
-            var newObject = Instantiate(prefab);
+            var newObject = Instantiate(prefab,gameObject.transform.position, Quaternion.identity);
 
             //add the pooledObject component to allow it to be retrieved and added to the pool
             var poolTag = newObject.AddComponent<PooledObject>();
@@ -91,7 +91,8 @@ public class ObjectPoolScript : MonoBehaviour
         
         //disable the object and make it a child of this object
         gameObject.SetActive(false);
-        gameObject.transform.parent = this.transform;
+        //gameObject.transform.parent = this.transform;
+        gameObject.transform.localPosition = this.transform.localPosition;
         //puts the object into the queue
         inactiveObjects.Enqueue(gameObject);
     }

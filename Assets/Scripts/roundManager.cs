@@ -5,19 +5,11 @@ using UnityEngine;
 public class roundManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private ObjectPoolScript playerPool;
-
-    [SerializeField]
-    private ObjectPoolScript FighterPool;
-
-    [SerializeField]
-    private ObjectPoolScript BomberPool;
 
     //public GameObject PlayerPrefab;
+    public ObjectPoolScript PlayerPool;
 
-   public GameObject PlayerSpawn;
-
+    
     private int _BomberNum = 5;
 
    public int BomberNum
@@ -89,15 +81,11 @@ public class roundManager : MonoBehaviour
 
         BombersSpawn = GameObject.FindGameObjectsWithTag("TopOfScreen");
 
-        if (BombersSpawn != null)
-            Debug.Log("Bomber Spawns found");
+    
 
         FightersSpawn = GameObject.FindGameObjectsWithTag("SidesOfScreen");
 
-        Debug.Log("RoundManager reporting for duty");
-
-        if (FightersSpawn != null)
-           Debug.Log("Fighter Spawns found");
+       
         CurrRound = RoundNumber.One;
 
 
@@ -108,11 +96,7 @@ public class roundManager : MonoBehaviour
     }
 
    
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
+   
 
     // Update is called once per frame
     void Update()
@@ -152,11 +136,9 @@ public class roundManager : MonoBehaviour
     {
         Debug.Log("Spawning player");
 
-        var PlayerInstance = playerPool.GetObject();
+        var PlayerInstance = PlayerPool.GetObject();
 
-        PlayerController GetScript = PlayerInstance.GetComponent<PlayerController>();
-
-        GetScript.OnRetrieve(PlayerSpawn);
+       
 
     }
 
@@ -203,16 +185,16 @@ public class roundManager : MonoBehaviour
         {
             for(int i = 0; i < spawnLimit; i++)
             {
-                var Bomber = BomberPool.GetObject();
-                BomberScript BomberInstance = Bomber.GetComponent<BomberScript>();
-                BomberInstance.OnRetrieve(BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position);
+                var BomberSpawn = BombersSpawn[Random.Range(0, BombersSpawn.Length)].GetComponent<ObjectPoolScript>(); ;
 
+                BomberSpawn.GetObject();
                // Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
                 Debug.Log("Should've spawned a bomber");
 
-                var Fighter = FighterPool.GetObject();
-                FighterScript FighterInstance = Fighter.GetComponent<FighterScript>();
-                FighterInstance.OnRetrieve(FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position);
+                var FighterSpawn = FightersSpawn[Random.Range(0, FightersSpawn.Length)].GetComponent<ObjectPoolScript>();
+
+                FighterSpawn.GetObject();
+              
 
                 //Instantiate(Fighters, FightersSpawn[Random.Range(0, FightersSpawn.Length)].transform.position, Quaternion.identity);
 
@@ -228,40 +210,6 @@ public class roundManager : MonoBehaviour
        
     }
 
-    public void RoundSpawn()
-    {
-
-       
-
-        //int MaxEnemyOnScreen = 4;
-
-        //int numberSpawn = 0;
-
-        //while(MaxEnemyOnScreen >= numberSpawn) {
-
-        //    GameObject BomberSpawnPoint = BombersSpawn[Random.Range(0, BombersSpawn.Length)];
-
-        //    GameObject FighterSpawnPoint = FightersSpawn[Random.Range(0, FightersSpawn.Length)];
-
-        //    Instantiate(Bombers, BomberSpawnPoint.transform.position, Quaternion.identity);
-        //    numberSpawn++;
-
-
-        //    Instantiate(Fighters, FighterSpawnPoint.transform.position, Quaternion.identity);
-        //    numberSpawn++;
-
-        //    StartCoroutine(SpawnedTwo());
-        //}
-
-
-
-        //if (BomberNum == 0 && FighterNum == 0)
-        //{
-        //    return;
-        //}
-    }
-
-  
 
     public void ChangeRound()
     {

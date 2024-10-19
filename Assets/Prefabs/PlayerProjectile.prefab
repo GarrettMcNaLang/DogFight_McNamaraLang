@@ -187,5 +187,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e322e25b2473b41be3382bf7defe9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projSpeed: 0
-  timeUntilDeath: 0
+  timeUntilDeath: 5
+  projSpeed: 5

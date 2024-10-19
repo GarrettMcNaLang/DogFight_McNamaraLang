@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class BomberScript : EnemyBehavior
 {
+    bool isVisible;
+    bool isDisabled;
     //Vector for moving
     Vector2 bomberMove = Vector2.down;
 
   
 
-    public override void InitialSetup()
-    {
-       
-    }
+
     void FixedUpdate()
     {
-        eRB.MovePosition(eRB.position + ((bomberMove * speed) * Time.deltaTime));
+        if(!isDisabled)
+        {
+            eRB.MovePosition(eRB.position + ((bomberMove * speed) * Time.deltaTime));
+        }
+       
+    }
+
+    private void OnEnable()
+    {
+        isDisabled = false;
+    }
+
+    private void OnDisable()
+    {
+        isDisabled = true;
     }
     //will be called upon the enemy running into the player, or colliding with a projectile
     public override void KillEntity()
@@ -29,11 +42,28 @@ public class BomberScript : EnemyBehavior
         Debug.Log("Enemy killed, call event to decrease Bomber count");
     }
 
-    public void OnRetrieve(Vector2 enemyspawn)
+    void OnBecameVisible()
     {
-        eRB.position = enemyspawn;
-        
+        isVisible = true;
+
+
     }
 
-  
+    void OnBecameInvisible()
+    {
+        isVisible = false;
+
+
+        if (!isVisible)
+        {
+            //StartCoroutine(WaitThenKill());
+
+            gameObject.ReturnToPool();
+
+            Debug.Log("Object destroyed");
+        }
+
+
+
+    }
 }

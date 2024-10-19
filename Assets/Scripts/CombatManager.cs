@@ -7,7 +7,9 @@ public class CombatManager : MonoBehaviour
     public GameObject projPrefab;
 
     [SerializeField]
-    private ObjectPoolScript ProjectilePool;
+    private ObjectPoolScript PProjectilePool;
+    [SerializeField]
+    private ObjectPoolScript EProjectilePool;
 
     Vector2 PlayerFirePos;
     void Awake()
@@ -24,22 +26,13 @@ public class CombatManager : MonoBehaviour
         Debug.Log("Combat manager reporting for duty");
     }
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+  
 
     public void CreateProjectile(bool whoFired, Vector2 shooterTransform)
     {
        // Debug.Log("accessing CreateProjectile");
-        ProjectileScript ProjReference;
-        GameObject prefabInstance;
+       // ProjectileScript ProjReference;
+       // GameObject prefabInstance;
 
 
 
@@ -51,7 +44,8 @@ public class CombatManager : MonoBehaviour
                     Debug.Log("Creating player Projectile");
                     //prefabInstance = Instantiate(projPrefab, shooterTransform + Vector2.up, Quaternion.identity);
 
-                    prefabInstance = ProjectilePool.GetObject();
+
+                    PProjectilePool.GetObject();
 
                     StartCoroutine(WaitTwoSecond());
                         //Debug.Log("Creating player Projectile");
@@ -68,7 +62,7 @@ public class CombatManager : MonoBehaviour
             case false:
                 {
                     Debug.Log("Creating enemy projectile");
-                    prefabInstance = ProjectilePool.GetObject();   
+                    EProjectilePool.GetObject();
                   
                    
                     
@@ -84,10 +78,10 @@ public class CombatManager : MonoBehaviour
 
         }
 
-        ProjReference = prefabInstance.GetComponent<ProjectileScript>();
+       // ProjReference = prefabInstance.GetComponent<ProjectileScript>();
 
 
-        ProjReference.OnRetrieve(whoFired, shooterTransform);
+       // ProjReference.OnRetrieve(whoFired, shooterTransform);
     }
     IEnumerator WaitTwoSecond()
     {

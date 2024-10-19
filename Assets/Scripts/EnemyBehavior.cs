@@ -6,12 +6,11 @@ using UnityEngine;
 public abstract class EnemyBehavior : MonoBehaviour
 {
 
-    protected GameObject GoHereOnReturn;
-    //collider and rigibody
+   
     [HideInInspector]
     protected Collider2D eCollider;
 
-    [HideInInspector]
+    //[HideInInspector]
     protected Rigidbody2D eRB;
 
     [SerializeField]
@@ -20,7 +19,7 @@ public abstract class EnemyBehavior : MonoBehaviour
     //Each enemy will have one life, and if they are hit by a projectile from the player, they are killed
     protected int _EnemyLives = 1;
 
-    bool isVisible;
+    
 
     protected int EnemyLives
     {
@@ -34,7 +33,7 @@ public abstract class EnemyBehavior : MonoBehaviour
             if (_EnemyLives <= 0)
             {
                 Debug.Log("Initiate Enemy Death");
-                OnReturn();
+               
                 gameObject.ReturnToPool();
                 
             }
@@ -53,8 +52,8 @@ public abstract class EnemyBehavior : MonoBehaviour
         //if (eRB == null)
         //    Debug.Log("Awake function isn't making inheriters access rigidbodies");
 
-        GoHereOnReturn = GameObject.Find("GoHerewhenReturning");
-        InitialSetup();
+       
+        
 
 
     }
@@ -62,7 +61,7 @@ public abstract class EnemyBehavior : MonoBehaviour
     //kills the enemy on collision
     public abstract void KillEntity();
 
-    public abstract void InitialSetup();
+  
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
@@ -89,50 +88,12 @@ public abstract class EnemyBehavior : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
 
-    protected void KillOnLeaveCameraView()
-    {
-
-    }
-
-    void OnBecameVisible()
-    {
-        isVisible = true;
-
-       
-    }
-
-    void OnBecameInvisible()
-    {
-        isVisible = false;
-
-        
-        if (!isVisible)
-        {
-            //StartCoroutine(WaitThenKill());
-
-            gameObject.ReturnToPool();
-
-            Debug.Log("Object destroyed");
-        }
-       
-        
-
-    }
+ 
+   
 
   
-    public void OnReturn()
-    {
-        eRB.position = GoHereOnReturn.transform.position;
-    }
-    //Onhit
-    //EnemyMove
-
-    //OnHit
+  
 
 
 }

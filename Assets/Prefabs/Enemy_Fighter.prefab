@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2633646166004948635}
-  - component: {fileID: 5073422051989160795}
+  - component: {fileID: 4325347294012059057}
   m_Layer: 9
   m_Name: Nose
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3964024548006556101}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5073422051989160795
+--- !u!114 &4325347294012059057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2666710200237099609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c77da7314f97c642a5179d179b3f544, type: 3}
+  m_Script: {fileID: 11500000, guid: 21cb734ed46b47c46a7da2ce867d1869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 4897642376389116440, guid: 18c9a7a985464c34e94aea3012fddb36, type: 3}
 --- !u!1 &9094045715277703061
 GameObject:
   m_ObjectHideFlags: 0
