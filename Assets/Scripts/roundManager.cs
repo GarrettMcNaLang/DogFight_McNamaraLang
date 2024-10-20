@@ -60,7 +60,7 @@ public class roundManager : MonoBehaviour
 
     bool stillGoing;
 
-    int RoundNum;
+    
 
     private void OnEnable()
     {
@@ -122,9 +122,9 @@ public class roundManager : MonoBehaviour
             case RoundNumber.One:
                 {
                     Debug.Log("Round 1 activated");
-                    RoundNum = 1;
+                   
                     spawnLimit = 2;
-
+                    isLastRound = true;
                     RoundOne();
                     break;
                 }
@@ -144,6 +144,7 @@ public class roundManager : MonoBehaviour
 
     public void RoundOne()
     {
+        
         StartCoroutine(SetRoundNum(1));
 
         

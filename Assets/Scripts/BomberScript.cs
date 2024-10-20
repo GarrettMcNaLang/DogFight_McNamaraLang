@@ -58,12 +58,18 @@ public class BomberScript : EnemyBehavior
         {
             //StartCoroutine(WaitThenKill());
 
-            gameObject.ReturnToPool();
+            KillEntityNoPlayer();
 
             Debug.Log("Object destroyed");
         }
 
 
 
+    }
+
+    public override void KillEntityNoPlayer()
+    {
+        
+        gameObject.ReturnToPool();
     }
 }

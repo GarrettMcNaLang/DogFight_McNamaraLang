@@ -45,25 +45,7 @@ public class FighterScript : EnemyBehavior
     bool goToMiddle = false;
 
   
-    bool reachedMiddle
-    {
-        get
-        {
-            return reachedMiddle;
-        }
-
-        set
-        {
-            reachedMiddle = value;
-
-            if(goToMiddle)
-            {
-                AttackEvent();
-                
-            }
-            
-        }
-    }
+  
 
     
    
@@ -74,50 +56,63 @@ public class FighterScript : EnemyBehavior
 
         if (!isDisabled)
         {
-            NosePool = gameObject.GetComponentInChildren<ObjectPoolScript>();
-
-            Destinations = GameObject.FindGameObjectsWithTag("EMoveTowards");
-
-            ConstantDestination = GameObject.FindGameObjectsWithTag("ConstantLocation");
+            SetValues();
 
             Debug.Log("IsEnabled");
             // NewMidpointandEndpoint();
-            endPosition = Destinations[UnityEngine.Random.Range(0, Destinations.Length)];
 
-            ConstPosition = ConstantDestination[UnityEngine.Random.Range(0, ConstantDestination.Length)];
             //gets the inital position for the rigibody, used for distance and movement calculations
 
-            EnemyPosition = eRB.position;
-            //position of randomly selected end position
-            endPositionVector = endPosition.transform.position;
-
-            //position of ConstantDestination object
-            constantDestinationVector = ConstPosition.transform.position;
-
-            //direction from enemy position to middle destination
-            Direction = (constantDestinationVector - EnemyPosition).normalized;
+           
         }
 
       
     }
 
+    public override void Awake()
+    {
+        base.Awake();
+
+        NosePool = gameObject.GetComponentInChildren<ObjectPoolScript>();
+
+        Destinations = GameObject.FindGameObjectsWithTag("EMoveTowards");
+
+        ConstantDestination = GameObject.FindGameObjectsWithTag("ConstantLocation");
+    }
+
     void OnDisable()
     {
         isDisabled = true;
+
+        goToMiddle = false;
     }
 
-    public void NewMidpointandEndpoint()
+    public void SetValues()
     {
+
         Debug.Log("In Midpoint and Endpoint generator");
-       
+
+        endPosition = Destinations[UnityEngine.Random.Range(0, Destinations.Length)];
+
+        ConstPosition = ConstantDestination[UnityEngine.Random.Range(0, ConstantDestination.Length)];
+
+        EnemyPosition = eRB.position;
+        //position of randomly selected end position
+        endPositionVector = endPosition.transform.position;
+
+        //position of ConstantDestination object
+        constantDestinationVector = ConstPosition.transform.position;
+
+        //direction from enemy position to middle destination
+        Direction = (constantDestinationVector - EnemyPosition).normalized;
     }
 
+    
 
 
     void Update()
     {
-        if (!isDisabled)
-        {
+        
             EnemyPosition = eRB.position;
 
             if (!goToMiddle && Vector2.Distance(EnemyPosition, constantDestinationVector) < 1f)
@@ -132,7 +127,7 @@ public class FighterScript : EnemyBehavior
                 AttackEvent();
                 goToMiddle = true;
             }
-        }
+        
        
 
     }
@@ -195,5 +190,10 @@ public class FighterScript : EnemyBehavior
 
 
 
+    }
+
+    public override void KillEntityNoPlayer()
+    {
+        gameObject.ReturnToPool();
     }
 }

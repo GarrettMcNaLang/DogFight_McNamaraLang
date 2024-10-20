@@ -25,27 +25,8 @@ public abstract class ProjectileScript : MonoBehaviour
         //StartCoroutine(StartCount(timeUntilDeath));
 
     }
-
-    private void Update()
-    {
-        
-    }
-
-
-
-    protected IEnumerator StartCount(int timeUntilDeath)
-    {
-        yield return new WaitForSeconds(timeUntilDeath);
-        DeleteProjectile();
-    }
-
-    //on Call, will destroy itself
-    protected void DeleteProjectile()
-    {
-       
-        gameObject.ReturnToPool();
-    }
-
+    
+    public abstract void DeleteProjectile();
    
     //OnInstantiate/ Constructor
 

@@ -6,11 +6,15 @@ using UnityEngine;
 
 public class EnemyProjectile : ProjectileScript
 {
+
+    
     bool isDisable;
 
     public GameObject player;
 
     public int timeUntilDeath;
+
+    private float timer = 0f;
 
     //Vector2 for movement
     Vector2 ProjectileMove;
@@ -30,11 +34,24 @@ public class EnemyProjectile : ProjectileScript
 
             var rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotation + 90);
+
+            
         }
 
-        //StartCoroutine(StartCount(timeUntilDeath));
+       
     }
 
+    void Update()
+    {
+        
+            timer += Time.deltaTime;
+
+            if (timer >= timeUntilDeath)
+            {
+                DeleteProjectile();
+            }
+        
+    }
 
     void FixedUpdate()
     {
@@ -51,7 +68,10 @@ public class EnemyProjectile : ProjectileScript
     private void OnDisable()
     {
         isDisable = true;
+
+        timer = 0;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -61,6 +81,12 @@ public class EnemyProjectile : ProjectileScript
 
             DeleteProjectile();
         }
+    }
+
+    public override void DeleteProjectile()
+    {
+        Debug.Log("Returning enemy projectile");
+        gameObject.ReturnToPool();
     }
 
 

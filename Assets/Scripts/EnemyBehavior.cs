@@ -7,8 +7,7 @@ public abstract class EnemyBehavior : MonoBehaviour
 {
 
    
-    [HideInInspector]
-    protected Collider2D eCollider;
+   
 
     //[HideInInspector]
     protected Rigidbody2D eRB;
@@ -40,9 +39,9 @@ public abstract class EnemyBehavior : MonoBehaviour
                 
         }
     }
-    void Awake()
+    public virtual void Awake()
     {
-        eCollider = GetComponent<Collider2D>();
+        
 
         //if (eCollider == null)
         //    Debug.Log("Awake function isn't making inheriters access collider");
@@ -61,7 +60,7 @@ public abstract class EnemyBehavior : MonoBehaviour
     //kills the enemy on collision
     public abstract void KillEntity();
 
-  
+    public abstract void KillEntityNoPlayer();
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
@@ -75,7 +74,7 @@ public abstract class EnemyBehavior : MonoBehaviour
 
 
         }
-        else if(collision.transform.TryGetComponent<ProjectileScript>(out ProjectileScript projectile)) {
+        else if(collision.transform.TryGetComponent<PlayerProjectile>(out PlayerProjectile projectile)) {
 
 
             Debug.Log("projectile has hit enemy entity");

@@ -244,6 +244,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9d2b9a9573d144ba30c66df0c83a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  Player: {fileID: 0}
-  Projectile: {fileID: 6224478875212298646, guid: 353f7f53e6937914f9366cd40cbd0990, type: 3}
+  speed: 9

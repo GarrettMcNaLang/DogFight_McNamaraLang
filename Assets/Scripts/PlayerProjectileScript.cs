@@ -8,6 +8,8 @@ public class PlayerProjectile : ProjectileScript
 
     public int timeUntilDeath;
 
+    private float timer = 0f;
+
     //Vector2 for movement
     Vector2 ProjectileMove;
 
@@ -25,13 +27,17 @@ public class PlayerProjectile : ProjectileScript
             gameObject.transform.rotation = Quaternion.identity;
 
             ProjectileMove = Vector2.up * projSpeed;
+
+            
         }
-       //StartCoroutine(StartCount(timeUntilDeath));
+      
     }
 
     private void OnDisable()
     {
         isDisable = true;
+
+        timer = 0;
     }
 
     void FixedUpdate()
@@ -49,6 +55,18 @@ public class PlayerProjectile : ProjectileScript
 
     }
 
+    void Update()
+    {
+       
+            
+            timer += Time.deltaTime;
+            
+            if (timer >= timeUntilDeath)
+            {
+                DeleteProjectile();
+            }
+        
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -60,5 +78,13 @@ public class PlayerProjectile : ProjectileScript
             DeleteProjectile();
         }
     }
-  
+
+
+    public override void DeleteProjectile()
+    {
+        Debug.Log("player projectile returned");
+       gameObject.ReturnToPool();
+    }
+
+
 }

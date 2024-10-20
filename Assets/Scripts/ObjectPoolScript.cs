@@ -33,7 +33,8 @@ public class ObjectPoolScript : MonoBehaviour
             var dequeuedObject = inactiveObjects.Dequeue();
 
             //activates the object and moves it from root
-            dequeuedObject.transform.parent = null;
+            dequeuedObject.transform.position = this.transform.position;
+            //dequeuedObject.transform.parent = null;
             dequeuedObject.SetActive(true);
 
             //if the object possesses the notifier interface
@@ -92,7 +93,7 @@ public class ObjectPoolScript : MonoBehaviour
         //disable the object and make it a child of this object
         gameObject.SetActive(false);
         //gameObject.transform.parent = this.transform;
-        gameObject.transform.localPosition = this.transform.localPosition;
+        gameObject.transform.position = this.transform.position;
         //puts the object into the queue
         inactiveObjects.Enqueue(gameObject);
     }

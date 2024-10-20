@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
             PlayerHP -= 1;
         }
 
-        else if(collision.gameObject.TryGetComponent<ProjectileScript>(out ProjectileScript projectile))
+        else if(collision.gameObject.TryGetComponent<EnemyProjectile>(out EnemyProjectile projectile))
         {
             Debug.Log("hit by enemy projectile");
 
