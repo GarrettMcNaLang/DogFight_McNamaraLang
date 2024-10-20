@@ -2,15 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BomberScript : EnemyBehavior
+public class BomberScript : EnemyBehavior, IObjectPoolNotifier
 {
     bool isVisible;
     bool isDisabled;
     //Vector for moving
     Vector2 bomberMove = Vector2.down;
 
-  
 
+    public void OnEnqueuedToPool()
+    {
+
+    }
+
+    public void OnCreatedOrDequeuedFromPool(bool created)
+    {
+
+    }
+
+    public void ReturnThisObject()
+    {
+        gameObject.ReturnToPool();
+    }
 
     void FixedUpdate()
     {

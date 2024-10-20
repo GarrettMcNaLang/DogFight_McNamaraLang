@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GM : MonoBehaviour
 {
+
+    
     //public static event Action ChangeRoundNumber = delegate { };
 
     //singleton format
@@ -19,7 +22,7 @@ public class GM : MonoBehaviour
 
         reference = GameObject.Find("CombatObj").GetComponent<CombatManager>();
 
-        Debug.Log("Game Manager reporting for duty");
+        //Debug.Log("Game Manager reporting for duty");
 
 
     }
@@ -53,32 +56,10 @@ public class GM : MonoBehaviour
 
 
 
-    private void OnEnable()
-    {
-
-        SpawnProjectile += reference.CreateProjectile;
-    }
-
-    private void OnDisable()
-    {
-        SpawnProjectile -= reference.CreateProjectile;
-    }
-
+ 
     //will spawn projectiles
-    public delegate void ProjectileSpawner(bool whoFired, Vector2 shooterTransform);
-
-    public event ProjectileSpawner SpawnProjectile;
-
-
-    public void CallSpawnProjectile(bool whoFired, Vector2 shooterTransform)
-    {
-        Debug.Log("Entity that Fired: " + ((whoFired == true) ? " player" : "enemy"));
-
-        
-
-        SpawnProjectile(whoFired, shooterTransform);
-    }
-
+   
+   
     public delegate void StartGame();
 
     public event StartGame initiateRoundManager;
@@ -134,36 +115,28 @@ public class GM : MonoBehaviour
         Fightertransmit(Fighters);
     }
 
-    public delegate void SetUpRound();
+ 
+    public delegate void EndGame();
 
-    public event SetUpRound RoundInstance;
+    public event EndGame Endgame;
 
-    
+    public void EndgameFunction()
+    {
+        Debug.Log("in GM function to end game");
+        Endgame();
+    }
 
-    public delegate void PlayerDeath();
+    public void ResetGame()
+    {
+        var objects = FindObjectsOfType<GameObject>().OfType<IObjectPoolNotifier>();
 
-    public event PlayerDeath PlayerDeathEvent;
+        foreach (var obj in objects)
+        {
+            obj.ReturnThisObject();
+        }
 
+
+    }
    
-    //Spanws (Enemies and Players
 
-    //EnemyCount in Wave (Get Set)
-
-    //Enums for each wave
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //SetWave (enum Waves)
-
-    //Set enemy count to different values according to Wave value
 }

@@ -22,11 +22,15 @@ public class MenuManager : MonoBehaviour
 
     GameObject instructions;
 
+    GameObject victoryScreen;
+
     public TextMeshProUGUI bomberText;
 
     public TextMeshProUGUI fighterText;
 
     public TextMeshProUGUI playerLives;
+
+
 
     bool EscAxis;
 
@@ -54,6 +58,8 @@ public class MenuManager : MonoBehaviour
         GM.instance.Bombertransmit += ChangeBomberCount;
 
         GM.instance.Changestage += ChangeRoundNum;
+
+        GM.instance.Endgame += VictoryScreen;
     }
 
     private void OnDisable()
@@ -65,6 +71,8 @@ public class MenuManager : MonoBehaviour
         GM.instance.Bombertransmit -= ChangeBomberCount;
 
         GM.instance.Changestage -= ChangeRoundNum;
+
+        GM.instance.Endgame -= VictoryScreen;
     }
 
     private void Awake()
@@ -84,6 +92,8 @@ public class MenuManager : MonoBehaviour
 
         instructions = CanvasRef.transform.Find("Instructions").gameObject;
 
+        victoryScreen = CanvasRef.transform.Find("VictoryScreen").gameObject;
+
       
 
         if (MainMenu == null)
@@ -94,7 +104,7 @@ public class MenuManager : MonoBehaviour
 
 
        
-        Debug.Log("MenuManager Reporting for duty");
+        //Debug.Log("MenuManager Reporting for duty");
         MainMenu.SetActive(true);
     }
 
@@ -111,7 +121,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1.0f;
         // ChangeUI();
 
-        Debug.Log("has left function");
+        //Debug.Log("has left function");
         
     }
 
@@ -154,7 +164,7 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator WaitAndCheck()
     {
-        Debug.Log("Will Waait then start game");
+        //Debug.Log("Will Waait then start game");
         //counting to until avaialabe
         yield return new WaitForSeconds(5);
 
@@ -210,20 +220,32 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
+
     public void VictoryScreen()
     {
-        GameObject victory = GameObject.Find("VictoryScreen");
+        Debug.Log("Should have called this screen");
 
-        ActivatePanel(victory);
+        ActivatePanel(victoryScreen);
+        DeactivatePanel(MainUI);
+
+        Time.timeScale = 0.0f;
     }
 
     public void ReturnToMain()
     {
+
+        GM.instance.ResetGame();
+
         ActivatePanel(MainMenu);
         DeactivatePanel(instructions);
         DeactivatePanel(pauseScreen);
+        DeactivatePanel(victoryScreen);
+        DeactivatePanel(MainUI);
+
+        
+
 
     }
 
-   
+  
 }

@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class FighterScript : EnemyBehavior
+public class FighterScript : EnemyBehavior, IObjectPoolNotifier
 {
     bool isVisible;
     bool isDisabled;
@@ -44,11 +44,24 @@ public class FighterScript : EnemyBehavior
 
     bool goToMiddle = false;
 
-  
-  
 
-    
-   
+
+
+
+    public void OnEnqueuedToPool()
+    {
+
+    }
+
+    public void OnCreatedOrDequeuedFromPool(bool created)
+    {
+
+    }
+
+    public void ReturnThisObject()
+    {
+        gameObject.ReturnToPool();
+    }
 
     void OnEnable()
     {

@@ -14,7 +14,7 @@ public class CombatManager : MonoBehaviour
     Vector2 PlayerFirePos;
     void Awake()
     {
-        Debug.Log("Combat Manager Reporting for duty");
+//Debug.Log("Combat Manager Reporting for duty");
 
        
     }
@@ -23,7 +23,7 @@ public class CombatManager : MonoBehaviour
     {
 
         //GM.instance.SpawnProjectile += CreateProjectile;
-        Debug.Log("Combat manager reporting for duty");
+        //Debug.Log("Combat manager reporting for duty");
     }
     // Start is called before the first frame update
   

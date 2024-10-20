@@ -4,8 +4,9 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class EnemyProjectile : ProjectileScript
+public class EnemyProjectile : ProjectileScript,IObjectPoolNotifier
 {
+
 
     
     bool isDisable;
@@ -21,6 +22,8 @@ public class EnemyProjectile : ProjectileScript
 
     //the speed of the projectile
     public float projSpeed;
+
+
     private void OnEnable()
     {
         isDisable = false;
@@ -89,6 +92,19 @@ public class EnemyProjectile : ProjectileScript
         gameObject.ReturnToPool();
     }
 
+    public void OnEnqueuedToPool()
+    {
+        Debug.Log("Enemy Projectile returned to pool");
+    }
 
+    public void OnCreatedOrDequeuedFromPool(bool created)
+    {
+        Debug.Log("Enemy Projectile created");
+    }
+
+    public void ReturnThisObject()
+    {
+        gameObject.ReturnToPool();
+    }
 
 }

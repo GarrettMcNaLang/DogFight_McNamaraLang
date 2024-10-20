@@ -4,11 +4,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IObjectPoolNotifier
 {
     private ObjectPoolScript ProjPool;
 
-    private int _playerHP = 3;
+    private int _playerHP;
 
     public int PlayerHP
     {
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
             _playerHP = value;
 
             GM.instance.ChangePlayerHealth(PlayerHP);
-            Debug.LogFormat("Player HP = {0}", _playerHP);
+            //Debug.LogFormat("Player HP = {0}", _playerHP);
 
             if (_playerHP <= 0)
             {
@@ -68,11 +68,29 @@ public class PlayerController : MonoBehaviour
 
         
     }
-    // Start is called before the first frame update
-    void Start()
+
+    public void OnEnqueuedToPool()
     {
+
+    }
+
+    public void OnCreatedOrDequeuedFromPool(bool created)
+    {
+
+    }
+
+    public void ReturnThisObject()
+    {
+        gameObject.ReturnToPool();
+    }
+
+    void OnEnable()
+    {
+        PlayerHP = 3;
         GM.instance.ChangePlayerHealth(PlayerHP);
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -80,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
         //A Vector2 that represents the vertical and horizontal movements of the player
 
-        CardinalMovement = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical")).normalized;
+        CardinalMovement = new Vector2(Input.GetAxisRaw("Horizontal"),0).normalized;
 
         LeftClick |= Input.GetMouseButtonDown(0);
 
@@ -108,6 +126,7 @@ public class PlayerController : MonoBehaviour
  
     public void AttackEvent()
     {
+        
         Debug.Log("Player Has Fired");
 
         ProjPool.GetObject();

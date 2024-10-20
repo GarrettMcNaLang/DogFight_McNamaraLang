@@ -11,12 +11,9 @@ public abstract class ProjectileScript : MonoBehaviour
     protected Rigidbody2D rb;
 
     //decides how long an object lasts until death
-  
-   
- 
-    
 
-  
+
+
     void Awake()
     {
        
@@ -27,7 +24,14 @@ public abstract class ProjectileScript : MonoBehaviour
     }
     
     public abstract void DeleteProjectile();
-   
+
+    /// <summary>
+    /// returns object on restart round or on return to main menu
+    /// </summary>
+    public void UniversalReturn()
+    {
+        gameObject.ReturnToPool();
+    }
     //OnInstantiate/ Constructor
 
     //receive if it was fired by player or by enemy

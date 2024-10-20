@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class PlayerProjectile : ProjectileScript
+public class PlayerProjectile : ProjectileScript, IObjectPoolNotifier
 {
 
     public int timeUntilDeath;
@@ -17,6 +17,21 @@ public class PlayerProjectile : ProjectileScript
     public float projSpeed;
 
     bool isDisable;
+
+    public void OnEnqueuedToPool()
+    {
+
+    }
+
+    public void OnCreatedOrDequeuedFromPool(bool created)
+    {
+
+    }
+
+    public void ReturnThisObject()
+    {
+        gameObject.ReturnToPool();
+    }
 
     private void OnEnable()
     {

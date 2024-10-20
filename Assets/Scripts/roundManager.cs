@@ -10,7 +10,7 @@ public class roundManager : MonoBehaviour
     public ObjectPoolScript PlayerPool;
 
     
-    private int _BomberNum = 5;
+    private int _BomberNum;
 
    public int BomberNum
     {
@@ -19,14 +19,14 @@ public class roundManager : MonoBehaviour
         set { _BomberNum = value;
 
           GM.instance.ChangeBomberCount(BomberNum);
-            Debug.Log(_BomberNum);
+            //Debug.Log(_BomberNum);
 
             if (BomberNum <= 0)
                 GM.instance.ChangeBomberCount(0);
         }
     }
 
-    private int _FighterNum = 5;
+    private int _FighterNum;
 
     public int FighterNum
     {
@@ -35,7 +35,7 @@ public class roundManager : MonoBehaviour
         set { _FighterNum = value;
 
             GM.instance.ChangeFighterCount(FighterNum);
-            Debug.Log(_FighterNum);
+            //Debug.Log(_FighterNum);
 
             if (FighterNum <= 0)
                 GM.instance.ChangeFighterCount(0);
@@ -67,6 +67,8 @@ public class roundManager : MonoBehaviour
         GM.instance.initiateRoundManager += ChooseRound;
 
         GM.instance.Enemykilledevent += EnemyWasKilled;
+
+        
     }
 
     private void OnDisable()
@@ -110,6 +112,7 @@ public class roundManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("should call victory screen function");
             stillGoing = false;
         }
     }
@@ -121,9 +124,12 @@ public class roundManager : MonoBehaviour
         {
             case RoundNumber.One:
                 {
-                    Debug.Log("Round 1 activated");
+                    //Debug.Log("Round 1 activated");
                    
                     spawnLimit = 2;
+
+                    BomberNum = 0;
+                    FighterNum = 0;
                     isLastRound = true;
                     RoundOne();
                     break;
@@ -134,7 +140,7 @@ public class roundManager : MonoBehaviour
    
     public void SpawnPlayer()
     {
-        Debug.Log("Spawning player");
+        //Debug.Log("Spawning player");
 
         var PlayerInstance = PlayerPool.GetObject();
 
@@ -151,17 +157,18 @@ public class roundManager : MonoBehaviour
 
         SpawnPlayer();
 
-        Debug.Log("In Round 1 program");
+        //Debug.Log("In Round 1 program");
 
        
         StartCoroutine(RoundOneWorking());
 
         // RoundSpawn();
 
-        if (BomberNum == 0 && FighterNum == 0)
-        {
-            ChangeRound();
-        }
+        //if (BomberNum < 0 && FighterNum < 0)
+        //{
+        //    Debug.Log("Should have called function when no enemies are there");
+        //    ChangeRound(isLastRound);
+        //}
 
 
 
@@ -169,7 +176,7 @@ public class roundManager : MonoBehaviour
 
     IEnumerator SetRoundNum(int RoundNum)
     {
-        Debug.Log("Changing Round Number");
+        //Debug.Log("Changing Round Number");
 
         GM.instance.SetRoundUI(RoundNum);
 
@@ -207,21 +214,30 @@ public class roundManager : MonoBehaviour
 
         }
 
+        ChangeRound(isLastRound);
         Debug.Log("This shouldn't run");
        
+
     }
 
 
-    public void ChangeRound()
+    public void ChangeRound(bool DetermineRoundOrScreen)
     {
         if (isLastRound)
         {
             Debug.Log("Victory Screen condition");
+            GM.instance.EndgameFunction();
+        }
+        else if(!isLastRound)
+        {
+            Debug.Log("Inititate next round");
         }
         //GM.instance.Changestage Function.
 
 
     }
+
+ 
 
     public void EnemyWasKilled(bool EnemyType)
     {

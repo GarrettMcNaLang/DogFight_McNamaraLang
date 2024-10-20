@@ -8,10 +8,12 @@ using UnityEngine;
 public interface IObjectPoolNotifier {
 
     //called when object is being returned to the pool
-    void OnEnqueuedToPool();
+    public void OnEnqueuedToPool();
 
     //call when an object is created or when it's recycled in the pool
-    void OnCreatedOrDequeuedFromPool(bool created);
+    public void OnCreatedOrDequeuedFromPool(bool created);
+
+    public void ReturnThisObject();
 }
 public class ObjectPoolScript : MonoBehaviour
 {
