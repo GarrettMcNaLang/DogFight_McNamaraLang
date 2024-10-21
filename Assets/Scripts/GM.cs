@@ -7,20 +7,21 @@ using UnityEngine;
 public class GM : MonoBehaviour
 {
 
+    public static bool NotStarted;
     
     //public static event Action ChangeRoundNumber = delegate { };
 
     //singleton format
     public static GM instance;
 
-    CombatManager reference;
+    
     void Awake()
     {
         instance = this;
 
         DontDestroyOnLoad(gameObject);
 
-        reference = GameObject.Find("CombatObj").GetComponent<CombatManager>();
+       NotStarted = true;
 
         //Debug.Log("Game Manager reporting for duty");
 
@@ -124,19 +125,40 @@ public class GM : MonoBehaviour
     {
         Debug.Log("in GM function to end game");
         Endgame();
+        
+    }
+
+    public delegate void GameOverEvent();
+
+    public event GameOverEvent GameOver;
+
+    public void PlayerDied()
+    {
+        GameOver();
     }
 
     public void ResetGame()
     {
-        var objects = FindObjectsOfType<GameObject>().OfType<IObjectPoolNotifier>();
+        NotStarted = true;
+
+        
+
+        Debug.Log("Reset game function was called");
+        var objects = FindObjectsOfType<MonoBehaviour>().OfType<IObjectPoolNotifier>();
 
         foreach (var obj in objects)
         {
-            obj.ReturnThisObject();
+            Debug.Log(obj);
+            //obj.ReturnThisObject();
+
+            GameObject currObj = ((MonoBehaviour)obj).gameObject;
+
+            currObj.ReturnToPool();
         }
 
 
     }
+
    
 
 }

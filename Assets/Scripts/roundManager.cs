@@ -62,11 +62,15 @@ public class roundManager : MonoBehaviour
 
     
 
+    
+
     private void OnEnable()
     {
         GM.instance.initiateRoundManager += ChooseRound;
 
         GM.instance.Enemykilledevent += EnemyWasKilled;
+
+        GM.instance.GameOver += StopOnPlayerDeath;
 
         
     }
@@ -76,6 +80,8 @@ public class roundManager : MonoBehaviour
         GM.instance.initiateRoundManager -= ChooseRound;
 
         GM.instance.Enemykilledevent -= EnemyWasKilled;
+
+        GM.instance.GameOver -= StopOnPlayerDeath;
     }
     void Awake()
     {
@@ -114,6 +120,7 @@ public class roundManager : MonoBehaviour
         {
             Debug.Log("should call victory screen function");
             stillGoing = false;
+            
         }
     }
 
@@ -128,8 +135,8 @@ public class roundManager : MonoBehaviour
                    
                     spawnLimit = 2;
 
-                    BomberNum = 0;
-                    FighterNum = 0;
+                    BomberNum = 5;
+                    FighterNum = 5;
                     isLastRound = true;
                     RoundOne();
                     break;
@@ -157,21 +164,10 @@ public class roundManager : MonoBehaviour
 
         SpawnPlayer();
 
-        //Debug.Log("In Round 1 program");
-
        
         StartCoroutine(RoundOneWorking());
-
-        // RoundSpawn();
-
-        //if (BomberNum < 0 && FighterNum < 0)
-        //{
-        //    Debug.Log("Should have called function when no enemies are there");
-        //    ChangeRound(isLastRound);
-        //}
-
-
-
+       
+    
     }
 
     IEnumerator SetRoundNum(int RoundNum)
@@ -185,7 +181,8 @@ public class roundManager : MonoBehaviour
 
     IEnumerator RoundOneWorking()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitUntil(() => (GM.NotStarted == false));
+       
 
         Debug.Log("Code has reached Round 1");
 
@@ -193,7 +190,7 @@ public class roundManager : MonoBehaviour
         {
             for(int i = 0; i < spawnLimit; i++)
             {
-                var BomberSpawn = BombersSpawn[Random.Range(0, BombersSpawn.Length)].GetComponent<ObjectPoolScript>(); ;
+                var BomberSpawn = BombersSpawn[Random.Range(0, BombersSpawn.Length)].GetComponent<ObjectPoolScript>();
 
                 BomberSpawn.GetObject();
                // Instantiate(Bombers, BombersSpawn[Random.Range(0, BombersSpawn.Length)].transform.position, Quaternion.identity);
@@ -226,6 +223,7 @@ public class roundManager : MonoBehaviour
         if (isLastRound)
         {
             Debug.Log("Victory Screen condition");
+            StopCoroutine(RoundOneWorking());
             GM.instance.EndgameFunction();
         }
         else if(!isLastRound)
@@ -251,5 +249,10 @@ public class roundManager : MonoBehaviour
             Debug.Log("Bomber was killed");
             BomberNum -= 1;
         }
+    }
+
+    public void StopOnPlayerDeath()
+    {
+        StopAllCoroutines();
     }
 }

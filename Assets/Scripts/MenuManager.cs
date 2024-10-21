@@ -24,6 +24,8 @@ public class MenuManager : MonoBehaviour
 
     GameObject victoryScreen;
 
+    GameObject gameOverScreen;
+
     public TextMeshProUGUI bomberText;
 
     public TextMeshProUGUI fighterText;
@@ -60,6 +62,8 @@ public class MenuManager : MonoBehaviour
         GM.instance.Changestage += ChangeRoundNum;
 
         GM.instance.Endgame += VictoryScreen;
+
+        GM.instance.GameOver += GameOverScreen;
     }
 
     private void OnDisable()
@@ -73,6 +77,8 @@ public class MenuManager : MonoBehaviour
         GM.instance.Changestage -= ChangeRoundNum;
 
         GM.instance.Endgame -= VictoryScreen;
+
+        GM.instance.GameOver -= GameOverScreen;
     }
 
     private void Awake()
@@ -94,6 +100,7 @@ public class MenuManager : MonoBehaviour
 
         victoryScreen = CanvasRef.transform.Find("VictoryScreen").gameObject;
 
+        gameOverScreen = CanvasRef.transform.Find("GameOverScreen").gameObject;
       
 
         if (MainMenu == null)
@@ -146,11 +153,12 @@ public class MenuManager : MonoBehaviour
     {
         var StageText = Stage.transform.Find("Stage Insert").GetComponent<TextMeshProUGUI>();
 
+        StageText.text = "Stage " + newRoundNum;
 
         Stage.SetActive(true);
 
 
-        StageText.text = "Stage " + newRoundNum;
+      
 
        
 
@@ -169,6 +177,8 @@ public class MenuManager : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         Stage.SetActive(false);
+
+        GM.NotStarted = false;
        
 
     }
@@ -199,6 +209,7 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         Debug.Log("ExitingGame and uncoupling events");
+        GM.instance.ResetGame();
         Application.Quit();
     }
     public void PauseScreen()
@@ -231,6 +242,13 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0.0f;
     }
 
+    public void GameOverScreen()
+    {
+        Time.timeScale = 0.0f;
+        gameOverScreen.SetActive(true);
+        DeactivatePanel(MainUI);
+    }
+
     public void ReturnToMain()
     {
 
@@ -241,6 +259,7 @@ public class MenuManager : MonoBehaviour
         DeactivatePanel(pauseScreen);
         DeactivatePanel(victoryScreen);
         DeactivatePanel(MainUI);
+        DeactivatePanel(gameOverScreen);
 
         
 

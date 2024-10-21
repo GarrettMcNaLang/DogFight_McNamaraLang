@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour, IObjectPoolNotifier
                 GM.instance.ChangePlayerHealth(0);
                 
                 gameObject.ReturnToPool();
+
+                GM.instance.PlayerDied();
                 Debug.Log("Install Player Death");
             }
                
