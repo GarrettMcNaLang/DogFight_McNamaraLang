@@ -84,6 +84,10 @@ public class EnemyProjectile : ProjectileScript,IObjectPoolNotifier
 
             DeleteProjectile();
         }
+        else if(collision.transform.TryGetComponent<PlayerProjectile>(out PlayerProjectile projectile))
+        {
+            DeleteProjectile();
+        }
     }
 
     public override void DeleteProjectile()

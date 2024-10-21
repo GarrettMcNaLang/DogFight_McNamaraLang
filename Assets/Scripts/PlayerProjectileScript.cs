@@ -92,6 +92,10 @@ public class PlayerProjectile : ProjectileScript, IObjectPoolNotifier
 
             DeleteProjectile();
         }
+       else if(collision.transform.TryGetComponent<EnemyProjectile>(out EnemyProjectile Eproj)){
+
+            DeleteProjectile();
+        }
     }
 
 
